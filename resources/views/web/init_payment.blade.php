@@ -69,14 +69,14 @@
         <h1>Exclusive Offer</h1>
         <p>Get the best product at an unbeatable price.</p>
         <div class="price">$ 20</div>
-        <button class="checkout-button">Checkout</button>
+        <button id="checkbtn" class="checkout-button">Checkout</button>
     </div>
 
     <script type="text/javascript">
         var stripe = Stripe(
             "{{ env('STRIPE_KEY') }}"
         );
-        var checkoutButton = document.getElementById('checkout-button');
+        var checkoutButton = document.getElementById('checkbtn');
 
         checkoutButton.addEventListener('click', function() {
             fetch('/checkout', {
