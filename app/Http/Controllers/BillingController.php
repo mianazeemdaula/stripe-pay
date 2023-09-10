@@ -23,9 +23,9 @@ class BillingController extends Controller
                 'price_data' => [
                   'currency' => 'usd',
                   'product_data' => [
-                    'name' => 'T-shirt',
+                    'name' => 'T-shirt Orion Star',
                   ],
-                  'unit_amount' => 2000,
+                  'unit_amount' => intval(1 * 100),
                 ],
                 'quantity' => 1,
               ]],
