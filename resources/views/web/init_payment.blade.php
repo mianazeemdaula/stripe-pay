@@ -68,7 +68,7 @@
     <div class="checkout-container">
         <h1>Exclusive Offer</h1>
         <p>Get the best product at an unbeatable price.</p>
-        <div class="price">$ 20</div>
+        <div class="price">$ 1</div>
         <button id="checkbtn" class="checkout-button">Checkout</button>
     </div>
 

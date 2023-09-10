@@ -16,10 +16,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BillingController;
 
 Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/paywithcashapp', function () {
     return view('web.init_payment');
 });
 
 Route::get('checkout', [BillingController::class, 'createCheckoutSession']);
+Route::get('create-intent', [BillingController::class, 'createIntent']);
 Route::get('success', function() {
     return 'Payment successful!';
 });

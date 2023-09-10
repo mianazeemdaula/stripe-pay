@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
+use Stripe\PaymentIntent;
 
 class BillingController extends Controller
 {
@@ -31,5 +32,26 @@ class BillingController extends Controller
         ]);
 
         return response()->json($checkout_session, 200);
+    }
+
+
+    function createIntent()  {
+
+      Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $paymentIntent = PaymentIntent::create([
+            'amount' => intval(1 * 100), // amount in cents
+            'currency' => 'usd',
+            'payment_method_types' => ['card','cashapp'],
+            'confirm' => true,
+            'cancel_url' => url('cancel'),
+            'return_url' => url('success'),
+        ]);
+
+        return response()->json([
+            'paymentIntent' => $paymentIntent,
+            'publishableKey' => env('STRIPE_KEY'),
+        ]);
+      
     }
 }
