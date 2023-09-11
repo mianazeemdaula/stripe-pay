@@ -9,31 +9,22 @@ trait TransactionTrait
 {
     public function updateBalance(float $amount, string $description = null)
     {
-        try {
-            DB::beginTransaction();
-            // Create a new transaction
-            $transaction = new Transaction([
-                'amount' => $amount,
-                'type' => $amount > 0 ? 'income' : 'withdrawal',
-                'description' => $description,
-                'user_id' => $this->id,
-            ]);
+        $transaction = new Transaction([
+            'amount' => $amount,
+            'type' => $amount > 0 ? 'income' : 'withdrawal',
+            'description' => $description,
+            'user_id' => $this->id,
+        ]);
 
-            // Associate the transaction with the user
-            $this->transactions()->save($transaction);
+        // Associate the transaction with the user
+        $this->transactions()->save($transaction);
 
-            // Update the user's balance
-            if($amount > 0){
-                $this->balance += $amount;
-            }else{
-                $this->balance -= $amount;
-            }
-            $this->save();
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
+        // Update the user's balance
+        if($amount > 0){
+            $this->balance += $amount;
+        }else{
+            $this->balance -= $amount;
         }
+        $this->save();
     }
 }
