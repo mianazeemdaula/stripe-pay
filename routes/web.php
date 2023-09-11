@@ -20,8 +20,21 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::get('/login',[App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/login',[App\Http\Controllers\AuthController::class, 'doLogin']);
+Route::get('/signout',[App\Http\Controllers\AuthController::class, 'logout']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\AuthController::class, 'dashboard'])->name('dashboard');
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+        
+    });
+
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::resource('products',\App\Http\Controllers\User\ProductController::class);
+        Route::resource('invoices',\App\Http\Controllers\User\InvoiceController::class);
+    });
 });
 
 
