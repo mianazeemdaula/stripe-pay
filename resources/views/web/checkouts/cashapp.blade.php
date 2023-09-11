@@ -2,9 +2,10 @@
 @section('body')
     <div class="bg-green-400 flex items-center justify-center min-h-screen">
         <form id="amountForm" class="p-6 items-center justify-between flex flex-col">
-            <div class="mb-4 flex flex-col items-center justify-between">
+            <div class="mb-8 flex flex-col items-center justify-between">
                 <input type="number" id="amount" name="amount"
-                    class="w-full p-2 text-6xl text-white font-bold text-center rounded bg-green-400 focus:border-transparent focus:border-0 placeholder-white"
+                    class="w-full p-2 text-6xl text-white font-bold text-center rounded bg-green-400 focus:border-0 placeholder-white border-transparent !outline-none
+                    "
                     placeholder="$0" autofocus required>
                 <label for="amount"
                     class="block bg-green-500 px-4 py-1 bg-opacity-25  text-white rounded-full text-1xl my-2">USD</label>
