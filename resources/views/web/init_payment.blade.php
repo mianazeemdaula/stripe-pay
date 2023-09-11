@@ -1,86 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Payout</title>
-    <style>
-        body {
-            font-family: 'Arial, sans-serif';
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .checkout-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .checkout-container h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .checkout-container p {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #666;
-        }
-
-        .checkout-container .price {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #00a859;
-            font-weight: bold;
-        }
-
-        .checkout-container .checkout-button {
-            background-color: #00a859;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .checkout-container .checkout-button:hover {
-            background-color: #008d4d;
-        }
-    </style>
-
-    <script src="https://js.stripe.com/v3/"></script>
-</head>
-
-<body>
-
-    <div class="checkout-container">
-        <h1>Exclusive Offer</h1>
-        <p>Get the best product at an unbeatable price.</p>
-        <div class="price">$ 1</div>
-        <button id="checkbtn" class="checkout-button">Checkout</button>
+@extends('layouts.web')
+@section('body')
+    <div>
+        <form id="amountForm" class="bg-white p-6 rounded shadow-md">
+            <div class="mb-4">
+                <label for="amount" class="block text-gray-700">Amount:</label>
+                <input type="text" id="amount" name="amount" class="w-full p-2 border border-gray-300 rounded mt-1"
+                    required>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Submit</button>
+        </form>
     </div>
+@endsection
+
+@section('js')
+    <script src="https://js.stripe.com/v3/"></script>
 
     <script type="text/javascript">
         var stripe = Stripe(
             "{{ env('STRIPE_KEY') }}"
         );
-        var checkoutButton = document.getElementById('checkbtn');
-
-        checkoutButton.addEventListener('click', function() {
+        document.getElementById('amountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let amount = document.getElementById('amount').value;
             fetch('/checkout', {
-                    method: 'GET',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        _token: '{{ csrf_token() }}',
+                        'invoice_id': '{{ $id }}',
+                    })
                 })
                 .then(function(response) {
                     return response.json();
@@ -100,6 +51,4 @@
                 });
         });
     </script>
-</body>
-
-</html>
+@endsection

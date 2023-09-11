@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('payment_gateway_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('invoice_id', 100)->unique();
+            $table->string('invoice_id', 50)->unique();
+            $table->string('payment_id', 100)->nullable()->unique();
             $table->json('response')->nullable();
             $table->json('data')->nullable();
             $table->string('status',30)->default('pending');

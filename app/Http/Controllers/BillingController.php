@@ -7,51 +7,43 @@ use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Log;
+
+use App\Models\Invoice;
 
 class BillingController extends Controller
 {
-    public function createCheckoutSession()
+    public function createCheckoutSession(Request $request)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $checkout_session = Session::create([
-            // 'payment_method_types' => ['card','cashapp'],
-            'success_url' => url('success'),
-            'mode' => 'payment',
-            'cancel_url' => url('cancel'),
-            'line_items' => [[
-                'price_data' => [
-                  'currency' => 'usd',
-                  'product_data' => [
-                    'name' => 'T-shirt Orion Star',
-                  ],
-                  'unit_amount' => intval(1 * 100),
-                ],
-                'quantity' => 1,
-              ]],
-        ]);
-
-        return response()->json($checkout_session, 200);
-    }
-
-
-    function createIntent()  {
-
+      $request->validate([
+        'invoice_id' => 'required',
+        'amount' => 'required',
+      ]);
       Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $paymentIntent = PaymentIntent::create([
-            'amount' => intval(1 * 100), // amount in cents
-            'currency' => 'usd',
-            'payment_method_types' => ['card','cashapp'],
-            'confirm' => true,
-            'cancel_url' => url('cancel'),
-            'return_url' => url('success'),
-        ]);
-
-        return response()->json([
-            'paymentIntent' => $paymentIntent,
-            'publishableKey' => env('STRIPE_KEY'),
-        ]);
-      
+      $invoice = Invoice::where('invoice_id', $request->invoice_id)->firstOrFail();
+      $session = Session::create([
+        'payment_method_types' => ['cashapp'],
+        'success_url' => url('success'),
+        'cancel_url' => url('cancel'),
+        'mode' => 'payment',
+        'metadata' => [
+          'invoice_id' => $request->invoice_id,
+        ],
+        'line_items' => [[
+            'price_data' => [
+              'currency' => 'usd',
+              'product_data' => [
+                'name' => $invoice->product->name,
+              ],
+              'unit_amount' => intval($request->amount * 100),
+            ],
+            'quantity' => 1,
+          ]],
+      ]);
+      Log::debug($session);
+      $invoice->payment_id = $session->id;
+      $invoice->amount = $request->amount;
+      $invoice->save();
+      return response()->json($session, 200);   
     }
 }

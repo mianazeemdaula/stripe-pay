@@ -18,12 +18,12 @@ use App\Http\Controllers\BillingController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/paywithcashapp', function () {
-    return view('web.init_payment');
+Route::get('/pay/{id}', function ($id) {
+    $invoice = \App\Models\Invoice::where('invoice_id', $id)->firstOrFail();
+    return view('web.init_payment', compact('id'));
 });
 
-Route::get('checkout', [BillingController::class, 'createCheckoutSession']);
-Route::get('create-intent', [BillingController::class, 'createIntent']);
+Route::post('checkout', [BillingController::class, 'createCheckoutSession']);
 Route::get('success', function() {
     return 'Payment successful!';
 });
