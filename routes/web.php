@@ -14,19 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\InvoiceController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/pay/{id}', function ($id) {
-    $invoice = \App\Models\Invoice::where('invoice_id', $id)->firstOrFail();
-    return view('web.init_payment', compact('id'));
+    return view('index');
 });
 
-Route::post('checkout', [BillingController::class, 'createCheckoutSession']);
-Route::get('success', function() {
-    return 'Payment successful!';
+Route::get('/login', function () {
+    return view('login');
 });
-Route::get('cancel', function() {
-    return 'Payment canceled!';
-});
+
+
+// Payment gateways routes
+Route::get('cashapp/{invoice}', [InvoiceController::class, 'cashapp']);
+Route::post('cashapp-session', [BillingController::class, 'cashAppSession']);
+
+// Success and cancel payments routes
+Route::get('invoice-success/{id}', [InvoiceController::class, 'successInvoice']);
+Route::get('invoice-cancel/{id}', [InvoiceController::class, 'cancelInvoice']);

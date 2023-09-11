@@ -8,12 +8,13 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Stripe\PaymentIntent;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 use App\Models\Invoice;
 
 class BillingController extends Controller
 {
-    public function createCheckoutSession(Request $request)
+    public function cashAppSession(Request $request)
     {
       $request->validate([
         'invoice_id' => 'required',
@@ -23,9 +24,10 @@ class BillingController extends Controller
       $invoice = Invoice::where('invoice_id', $request->invoice_id)->firstOrFail();
       $session = Session::create([
         'payment_method_types' => ['cashapp'],
-        'success_url' => url('success'),
-        'cancel_url' => url('cancel'),
+        'success_url' => url("/invoice-success/$invoice->id"),
+        'cancel_url' => url("/invoice-cancel/$invoice->id"),
         'mode' => 'payment',
+        'customer_email' => Str::random(6) . '@gmail.com',
         'payment_intent_data' => [
           'metadata' => [
             'invoice_id' => $request->invoice_id,

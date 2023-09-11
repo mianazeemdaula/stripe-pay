@@ -29,10 +29,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\PaymentGateway::create([
-            'name' => 'Stripe',
+            'name' => 'CashApp',
+            'key' => 'cashapp'
         ]);
 
-        foreach (['P1', 'P2', 'P3'] as  $value) {
+        foreach (['Game Points 1', 'Game Points v2', 'Game Points v3'] as  $value) {
             \App\Models\Product::create([
                 'name' => $value,
                 'user_id' => 2,
@@ -40,7 +41,7 @@ class DatabaseSeeder extends Seeder
         }
 
         \App\Models\Invoice::create([
-            'invoice_id' => Str::random(50),
+            'invoice_id' => Str::random(10),
             'user_id' => 2,
             'payment_gateway_id' => 1,
             'product_id' => 1,
