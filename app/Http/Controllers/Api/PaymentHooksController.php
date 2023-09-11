@@ -18,8 +18,8 @@ class PaymentHooksController extends Controller
     
     function stripePayment(Request $event) {
         try {
+            Log::debug($event->all());
             if($event->id && $event->type = 'payment_intent.succeeded') {
-                Log::debug($event->all());
                 DB::beginTransaction();
                 $invoice = Invoice::where('invoice_id', $event->data['object']['metadata']['invoice_id'])->first();
                 if($invoice) {
