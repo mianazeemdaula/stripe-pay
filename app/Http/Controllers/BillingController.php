@@ -27,14 +27,9 @@ class BillingController extends Controller
         'cancel_url' => url('cancel'),
         'mode' => 'payment',
         'payment_intent_data' => [
-            'invoice_data' => [
-                'custom_fields' => [
-                    [
-                        'name' => 'invoice_id',
-                        'value' => $request->invoice_id,
-                    ],
-                ],
-            ],
+          'metadata' => [
+            'invoice_id' => $request->invoice_id,
+          ],
         ],
         'line_items' => [[
             'price_data' => [
