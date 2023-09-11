@@ -23,13 +23,13 @@
                                 Invoie ID</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Type</th>
+                                Amount</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Status</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Item</th>
+                                Amount Paid</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Action
@@ -52,6 +52,7 @@
                                     {{ $item->status }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $item->amount_paid }}
                                 </td>
                                 <td class="flex space-x-1">
                                     <a href="{{ url("/cashapp/$item->invoice_id") }}"><span class="bi bi-eye"></span></a>
