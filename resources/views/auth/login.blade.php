@@ -2,7 +2,6 @@
 @section('body')
     <div class="h-screen flex items-center justify-center ">
         <form action="{{ url('login') }}" method="post">
-            @csrf
             <div class="mt-4 bg-white shadow">
                 <div class="bg-green-500  p-4">
                     <h2 class="text-white">Login</h2>
