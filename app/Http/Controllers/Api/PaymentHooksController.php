@@ -42,7 +42,20 @@ class PaymentHooksController extends Controller
     function stripeLinkPayment(Request $event) {
         try {
             if($event->id && $event->type = 'checkout.session.completed') {
-                
+                $session = null;
+                switch ($event->type) {
+                    case 'checkout.session.async_payment_failed':
+                      $session = $event->data->object;
+                    case 'checkout.session.async_payment_succeeded':
+                      $session = $event->data->object;
+                    case 'checkout.session.completed':
+                      $session = $event->data->object;
+                    case 'checkout.session.expired':
+                      $session = $event->data->object;
+                    // ... handle other event types
+                    default:
+                      echo 'Received unknown event type ' . $event->type;
+                  }
                 Log::debug($event->all());
                 // DB::beginTransaction();
                 // $invoice = Invoice::where('invoice_id', $event->data['object']['metadata']['invoice_id'])->first();
