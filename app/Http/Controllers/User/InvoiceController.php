@@ -14,7 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $collection = Invoice::where('user_id', auth()->user()->id)->get();
+        $collection = Invoice::where('user_id', auth()->user()->id)->latest()->get();
         return view('user.invoice.index', compact('collection'));
     }
 
