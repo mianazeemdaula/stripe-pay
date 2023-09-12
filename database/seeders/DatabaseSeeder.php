@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'officialwakeelahmad@gmail.com',
-            'password' => bcrypt('wakeelofficial722462@'),
+            'password' => bcrypt('@#12345base'),
         ]);
 
         \App\Models\PaymentGateway::create([
