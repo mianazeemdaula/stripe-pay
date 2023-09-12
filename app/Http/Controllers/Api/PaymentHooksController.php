@@ -51,6 +51,7 @@ class PaymentHooksController extends Controller
                 }
                 $invoice = new Invoice;
                 $invoice->invoice_id = $event->id;
+                $invoice->payment_gateway_id = 1;
                 $invoice->user_id = $userId;
                 $invoice->product_id = 1;
                 $invoice->status = 'paid';
