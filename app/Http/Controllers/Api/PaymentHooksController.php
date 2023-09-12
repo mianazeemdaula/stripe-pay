@@ -54,7 +54,7 @@ class PaymentHooksController extends Controller
                 $invoice->user_id = $userId;
                 $invoice->product_id = 1;
                 $invoice->status = 'paid';
-                // $invoice->response = $event->all();
+                $invoice->response = $event->all();
                 $invoice->data = $event->data['object']['metadata'];
                 $invoice->amount_paid = $event->data['object']['amount_total'] /  100;
                 $invoice->save();
