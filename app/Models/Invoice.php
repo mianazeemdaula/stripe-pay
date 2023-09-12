@@ -10,6 +10,10 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'response' => 'json'
+    ];
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
