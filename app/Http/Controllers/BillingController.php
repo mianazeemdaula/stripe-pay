@@ -48,6 +48,6 @@ class BillingController extends Controller
       $invoice->payment_id = $session->id;
       $invoice->amount = $request->amount;
       $invoice->save();
-      return response()->json($session, 200);   
+      return response()->json($session->id, 200);
     }
 }

@@ -40,9 +40,9 @@
                 .then(function(response) {
                     return response.json();
                 })
-                .then(function(response) {
+                .then(function(sessionId) {
                     return stripe.redirectToCheckout({
-                        sessionId: response.id,
+                        sessionId: sessionId,
                     });
                 })
                 .then(function(result) {

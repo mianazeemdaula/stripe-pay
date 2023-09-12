@@ -16,6 +16,8 @@ use Stripe\PaymentIntent;
 class PaymentHooksController extends Controller
 {
     
+
+    
     function stripePayment(Request $event) {
         try {
             if($event->id && $event->type = 'payment_intent.succeeded') {
@@ -30,6 +32,29 @@ class PaymentHooksController extends Controller
                     $invoice->user->updateBalance($invoice->amount_paid, 'Payment received for invoice #'.$invoice->invoice_id);
                 }
                 DB::commit();
+            }
+        } catch (\Exeception $th) {
+            DB::rollBack();
+            Log::debug($th);
+        }
+    }
+
+    function stripeLinkPayment(Request $event) {
+        try {
+            if($event->id && $event->type = 'checkout.session.completed') {
+                
+                Log::debug($event->all());
+                // DB::beginTransaction();
+                // $invoice = Invoice::where('invoice_id', $event->data['object']['metadata']['invoice_id'])->first();
+                // if($invoice) {
+                //     $invoice->status = 'paid';
+                //     $invoice->response = $event->all();
+                //     $invoice->data = $event->data['object']['metadata'];
+                //     $invoice->amount_paid = intval($event->data['object']['amount_received'] /  100);
+                //     $invoice->save();
+                //     $invoice->user->updateBalance($invoice->amount_paid, 'Payment received for invoice #'.$invoice->invoice_id);
+                // }
+                // DB::commit();
             }
         } catch (\Exeception $th) {
             DB::rollBack();
