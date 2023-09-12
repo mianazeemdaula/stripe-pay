@@ -50,7 +50,7 @@ class PaymentHooksController extends Controller
                     $userId = $event->data['object']['metadata']['customer_id'];
                 }
                 $invoice = new Invoice;
-                $invoice->invoice_id = $event->id;
+                $invoice->payment_id = $event->id;
                 $invoice->payment_gateway_id = 1;
                 $invoice->user_id = $userId;
                 $invoice->product_id = 1;
