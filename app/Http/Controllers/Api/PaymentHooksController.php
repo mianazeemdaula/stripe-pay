@@ -46,8 +46,8 @@ class PaymentHooksController extends Controller
             if($event->id && $event->type = 'checkout.session.completed') {
                 DB::beginTransaction();
                 $userId = 1;
-                if(isset($event->data['object']['metadata']['user_id'])){
-                    $userId = $event->data['object']['metadata']['user_id'];
+                if(isset($event->data['object']['metadata']['customer_id'])){
+                    $userId = $event->data['object']['metadata']['customer_id'];
                 }
                 $invoice = new Invoice;
                 $invoice->invoice_id = $event->id;
