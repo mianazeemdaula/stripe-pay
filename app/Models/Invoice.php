@@ -11,7 +11,8 @@ class Invoice extends Model
     use HasFactory;
 
     protected $casts = [
-        'response' => 'json'
+        'response' => 'json',
+        'data' => 'json',
     ];
 
     public function product(): BelongsTo
