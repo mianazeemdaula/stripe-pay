@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use App\Models\Invoice;
 
 // Stripe
@@ -51,6 +52,7 @@ class PaymentHooksController extends Controller
                 }
                 $invoice = new Invoice;
                 $invoice->payment_id = $event->id;
+                $invoice->invoice_id = Str::random(10);
                 $invoice->payment_gateway_id = 1;
                 $invoice->user_id = $userId;
                 $invoice->product_id = 1;
