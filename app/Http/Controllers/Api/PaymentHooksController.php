@@ -44,22 +44,22 @@ class PaymentHooksController extends Controller
     function stripeLinkPayment(Request $event) {
         // try {
             if($event->id && $event->type = 'checkout.session.completed') {
-                // DB::beginTransaction();
+                DB::beginTransaction();
                 $userId = 1;
                 if(isset($event->data['object']['metadata']['customer_id'])){
                     $userId = $event->data['object']['metadata']['customer_id'];
                 }
-                // $invoice = new Invoice;
-                // $invoice->invoice_id = $event->id;
-                // $invoice->user_id = $userId;
-                // $invoice->product_id = 1;
-                // $invoice->status = 'paid';
-                // $invoice->response = $event->all();
+                $invoice = new Invoice;
+                $invoice->invoice_id = $event->id;
+                $invoice->user_id = $userId;
+                $invoice->product_id = 1;
+                $invoice->status = 'paid';
+                $invoice->response = $event->all();
                 // $invoice->data = $event->data['object']['metadata'];
                 // $invoice->amount_paid = $event->data['object']['amount_total'] /  100;
-                // $invoice->save();
+                $invoice->save();
                 // $invoice->user->updateBalance($invoice->amount_paid, 'Payment received for invoice #'.$invoice->id);
-        //         DB::commit();
+                // DB::commit();
             }
         // } catch (\Exeception $th) {
         //     DB::rollBack();
