@@ -45,7 +45,7 @@ class PaymentHooksController extends Controller
 
     function stripeLinkPayment(Request $event) {
         try {
-            if($event->id && $event->type = 'checkout.session.completed') {
+            if($event->id && $event->type = 'checkout.session.completed' && $event->livemode == true) {
                 DB::beginTransaction();
                 $userId = 1;
                 if(isset($event->data['object']['metadata']['customer_id'])){
