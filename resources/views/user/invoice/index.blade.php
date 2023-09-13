@@ -6,7 +6,7 @@
         <h2 class="text-xl">Invoices</h2>
     </div>
     <div class="mt-4 bg-white">
-        <div class="bg-blue-500  p-2 flex justify-between">
+        <div class="bg-green-500  p-2 flex justify-between">
             <h2 class="text-white">Invoices</h2>
             <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a>
         </div>
@@ -49,7 +49,8 @@
                                     {{ $item->payment_id }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    ${{ $item->response['data']['object']['customer_details']['email'] ?? '' }}
+                                    {{ $item->response['data']['object']['customer_details']['email'] ?? '' }}
+                                    {{ $item->response['data']['object']['customer_details']['email'] ?? '' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->status }}
