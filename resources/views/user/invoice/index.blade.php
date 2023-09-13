@@ -3,12 +3,13 @@
 @section('body')
     <div class="flex space-x-2 items-center">
         <span class="bi bi-gear text-2xl"></span>
-        <h2 class="text-xl">Invoices</h2>
+        <h2 class="text-xl">Payments</h2>
     </div>
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
-            <h2 class="text-white">Invoices</h2>
-            <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a>
+            <h2 class="text-white">Payments</h2>
+            <div>USD {{ auth()->user()->balance }}</div>
+            {{-- <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a> --}}
         </div>
         <div class="px-4 pb-2">
             <div class="overflow-x-auto mt-2">
