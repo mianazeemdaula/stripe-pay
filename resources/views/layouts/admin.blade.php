@@ -67,7 +67,7 @@
                 </li> --}}
                 <li @if ($page == 'invoices') class="active" @endif>
                     <i class="bi-receipt"></i>
-                    <a href="{{ route('user.invoices.index') }}">Invoices</a>
+                    <a href="{{ route('user.invoices.index') }}">Payments</a>
                 </li>
                 <li @if ($page == 'products') class="active" @endif>
                     <i class="bi-currency-dollar"></i>
