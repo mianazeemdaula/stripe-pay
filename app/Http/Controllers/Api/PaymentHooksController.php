@@ -22,7 +22,7 @@ class PaymentHooksController extends Controller
     
     function stripePayment(Request $event) {
         try {
-            if($event->id && $event->type = 'payment_intent.succeeded') {
+            if($event->id && $event->type == 'payment_intent.succeeded') {
                 if(isset($event->data['object']['metadata']['invoice_id'])){
                     DB::beginTransaction();
                     $invoice = Invoice::where('invoice_id', $event->data['object']['metadata']['invoice_id'])->first();
@@ -45,7 +45,7 @@ class PaymentHooksController extends Controller
 
     function stripeLinkPayment(Request $event) {
         try {
-            if($event->id && $event->type = 'checkout.session.completed' && $event->livemode == true) {
+            if($event->id && $event->type == 'checkout.session.completed' && $event->livemode == true) {
                 DB::beginTransaction();
                 $userId = 1;
                 if(isset($event->data['object']['metadata']['customer_id'])){
