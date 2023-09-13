@@ -27,9 +27,9 @@
                     <a href='' class="relative">
                         <i class="bi bi-bell"></i>
                         <div class="absolute flex justify-center items-center h-3 w-3 top-0 right-0 rounded-full">
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-400"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
                             <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75">
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75">
                                 <img src="{{ asset('/images/.png') }}" alt="" class="w-8">
                             </span>
                         </div>
@@ -52,7 +52,7 @@
     <aside aria-label="Sidebar" id='sidebar' class="sidebar">
         <div class="absolute top-2 right-2 hover:cursor-pointer md:hidden text-slate-800" onclick="toggleSidebar()"><i
                 class="bi bi-x text-[32px]"></i></div>
-        <div class="flex justify-center items-center bg-red-50 py-12 md:hidden">
+        <div class="flex justify-center items-center bg-green-50 py-12 md:hidden">
             <img src="{{ asset('/images/logo/black.png') }}" alt="" class="w-40">
         </div>
         <div class="mt-12 px-8">
@@ -98,7 +98,9 @@
         </div>
     </aside>
     <div class="responsive-body">
-        @yield('body')
+        <div class="container px-6 py-2">
+            @yield('body')
+        </div>
     </div>
     @yield('script')
     <script type="module">
@@ -109,17 +111,9 @@
                 "{{ Session::get('alert') ? 'success' : 'error' }}"
             )
         @endif
+    </script>
 
-        $(window).scroll(function() {
-            // this will work when your window scrolled.
-            var height = $(window).scrollTop(); //getting the scrolling height of window
-            if (height > 5) {
-                $("header").addClass("scrolled");
-            } else {
-                $("header").removeClass("scrolled");
-            }
-        });
-
+    <script>
         function toggleSidebar() {
             $("#sidebar").toggleClass("mobile");
         }

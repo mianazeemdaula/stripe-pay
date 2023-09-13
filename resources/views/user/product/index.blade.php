@@ -6,7 +6,7 @@
         <h2 class="text-xl">Products</h2>
     </div>
     <div class="mt-4 bg-white">
-        <div class="bg-blue-500  p-2 flex justify-between">
+        <div class="bg-green-500  p-2 flex justify-between">
             <h2 class="text-white">Products</h2>
             <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.products.create') }}">Add Product</a>
         </div>

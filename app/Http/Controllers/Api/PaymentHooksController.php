@@ -13,6 +13,7 @@ use App\Models\Invoice;
 // Stripe
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
+use Stripe\Transactions;
 
 class PaymentHooksController extends Controller
 {
@@ -68,5 +69,26 @@ class PaymentHooksController extends Controller
             DB::rollBack();
             Log::debug($th);
         }
+    }
+
+    public function getAllPaymentsWithMetadata(Request $request)
+    {
+        // Set the Stripe API key
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        // Get all payments with specific metadata
+        $payments = \Stripe\PaymentIntent::search([
+            'limit' => 10,
+            // 'status' => 'succeeded',
+            'query' => "metadata['customer_id']:'2'",
+        ]);
+
+        // $payments = \Stripe\Transactions::all([
+        //     'limit' => 10,
+        //     'metadata' => ['customer_id' => '2'],
+        //     'query' => "metadata['customer_id']:'2'",
+        // ]);
+
+        return response()->json($payments);
     }
 }
