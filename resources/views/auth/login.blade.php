@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="px-6 py-2 flex justify-end">
-                    <button type="submit" class="bg-blue-400 py-2 rounded px-8 text-white">Login</button>
+                    <button type="submit" class="bg-green-500 py-2 rounded px-8 text-white">Login</button>
                 </div>
             </div>
         </form>
