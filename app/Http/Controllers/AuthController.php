@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Stripe\Stripe;
 
 
 class AuthController extends Controller
@@ -39,7 +39,12 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        return view('auth.dashboard');
+        $balance = null;
+        if(auth()->user()->type == 'admin'){
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $balance = \Stripe\Balance::retrieve();
+        }
+        return view('auth.dashboard', compact('balance'));
     }
 
     public function logout(Request $request)

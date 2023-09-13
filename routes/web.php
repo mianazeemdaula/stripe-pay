@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Stripe\Stripe;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +47,4 @@ Route::post('cashapp-session', [BillingController::class, 'cashAppSession']);
 // Success and cancel payments routes
 Route::get('invoice-success/{id}', [InvoiceController::class, 'successInvoice']);
 Route::get('invoice-cancel/{id}', [InvoiceController::class, 'cancelInvoice']);
+
