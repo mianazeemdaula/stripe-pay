@@ -69,10 +69,10 @@
                     <i class="bi-receipt"></i>
                     <a href="{{ route('user.invoices.index') }}">Payments</a>
                 </li>
-                <li @if ($page == 'products') class="active" @endif>
+                {{-- <li @if ($page == 'products') class="active" @endif>
                     <i class="bi-currency-dollar"></i>
                     <a href="{{ route('user.products.index') }}">Products</a>
-                </li>
+                </li> --}}
                 {{-- <li @if ($page == 'teamleaders') class="active" @endif>
                     <i class="bi-diagram-2"></i>
                     <a href="{{ url('admin.teamleaders.index') }}">Team Leaders</a>

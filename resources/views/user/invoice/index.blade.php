@@ -63,7 +63,7 @@
                                     {{ $item->created_at }}
                                 </td>
                                 <td class="flex space-x-1">
-                                    <a href="{{ url("/cashapp/$item->invoice_id") }}"><span class="bi bi-eye"></span></a>
+                                    {{-- <a href="{{ url("/cashapp/$item->invoice_id") }}"><span class="bi bi-eye"></span></a>
                                     <form action="{{ url('user.invoices.update', $item->id) }}" method="post">
                                         @method('put')
                                         @csrf
@@ -73,7 +73,7 @@
                                         @method('detete')
                                         @csrf
                                         <button type="submit"><span class="bi bi-x"></span></button>
-                                    </form>
+                                    </form> --}}
                                     {{-- <form action="{{ route('sells.destroy', $item->id) }}" method="post">
                                     @method('delete')
                                     @csrf
