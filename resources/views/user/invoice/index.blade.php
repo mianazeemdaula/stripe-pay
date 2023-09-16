@@ -60,24 +60,8 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->created_at }}
                                 </td>
-                                <td class="flex space-x-1">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->tax }}
-                                    {{-- <a href="{{ url("/cashapp/$item->invoice_id") }}"><span class="bi bi-eye"></span></a>
-                                    <form action="{{ url('user.invoices.update', $item->id) }}" method="post">
-                                        @method('put')
-                                        @csrf
-                                        <button type="submit"><span class="bi bi-check"></span></button>
-                                    </form>
-                                    <form action="{{ route('user.invoices.destroy', $item->id) }}" method="post">
-                                        @method('detete')
-                                        @csrf
-                                        <button type="submit"><span class="bi bi-x"></span></button>
-                                    </form> --}}
-                                    {{-- <form action="{{ route('sells.destroy', $item->id) }}" method="post">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit"><span class="bi bi-trash"></span></button>
-                                </form> --}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->amount - $item->tax }}
