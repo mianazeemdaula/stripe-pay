@@ -64,7 +64,7 @@
                                     {{ $item->tax }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->amount - $item->tax }}
+                                    {{ $item->amount_paid - $item->tax }}
                                 </td>
                             </tr>
                         @endforeach
