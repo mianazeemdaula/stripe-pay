@@ -51,7 +51,7 @@ Route::get('invoice-cancel/{id}', [InvoiceController::class, 'cancelInvoice']);
 Route::get('datafeed', function(){
     $invoices = \App\Models\Invoice::all();
     foreach($invoices as $invoice){
-        $invoice->tax = ($invoice->amount_paid * 0.029) + 30;
+        $invoice->tax = ($invoice->amount_paid * 2.9) + 0.30;
         $invoice->save();
     }
 });

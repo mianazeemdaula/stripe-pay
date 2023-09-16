@@ -63,10 +63,10 @@ class PaymentHooksController extends Controller
                 $invoice->status = 'paid';
                 $invoice->response = $event->all();
                 $invoice->data = $event->data['object']['metadata'];
-                $invoice->amount_paid = $amount;
+                $invoice->amount_paid = ($amount / 100);
                 $invoice->tax = $tax;
                 $invoice->save();
-                $invoice->user->updateBalance($amount - $tax, 'Payment received for invoice #'.$invoice->id);
+                $invoice->user->updateBalance($invoice->amount_paid - $tax, 'Payment received for invoice #'.$invoice->id);
                 DB::commit();
             }
         } catch (\Exeception $th) {
