@@ -48,3 +48,11 @@ Route::post('cashapp-session', [BillingController::class, 'cashAppSession']);
 Route::get('invoice-success/{id}', [InvoiceController::class, 'successInvoice']);
 Route::get('invoice-cancel/{id}', [InvoiceController::class, 'cancelInvoice']);
 
+Route::get('datafeed', function(){
+    $invoices = \App\Models\Invoice::all();
+    foreach($invoices as $invoice){
+        $invoice->tax = ($invoice->amount * 0.029) + 30;
+        $invoice->save();
+    }
+});
+

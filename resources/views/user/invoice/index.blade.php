@@ -8,7 +8,7 @@
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
             <h2 class="text-white">Payments</h2>
-            <div>USD {{ auth()->user()->balance }}</div>
+            <div class="text-white">USD {{ auth()->user()->balance }}</div>
             {{-- <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a> --}}
         </div>
         <div class="px-4 pb-2">
@@ -16,9 +16,6 @@
                 <table class="min-w-full divide-y divide-gray-200 table-striped table-bordered" id="dataTable">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                ID</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Tx ID</th>
@@ -36,16 +33,17 @@
                                 Time</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Action
+                                Tax
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Received
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($collection as $item)
                             <tr class="border-b-2">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->id }}
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->payment_id }}
                                 </td>
@@ -63,6 +61,7 @@
                                     {{ $item->created_at }}
                                 </td>
                                 <td class="flex space-x-1">
+                                    {{ $item->tax }}
                                     {{-- <a href="{{ url("/cashapp/$item->invoice_id") }}"><span class="bi bi-eye"></span></a>
                                     <form action="{{ url('user.invoices.update', $item->id) }}" method="post">
                                         @method('put')
@@ -79,6 +78,9 @@
                                     @csrf
                                     <button type="submit"><span class="bi bi-trash"></span></button>
                                 </form> --}}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $item->amount - $item->tax }}
                                 </td>
                             </tr>
                         @endforeach

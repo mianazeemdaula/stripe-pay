@@ -51,6 +51,9 @@ class PaymentHooksController extends Controller
                 if(isset($event->data['object']['metadata']['customer_id'])){
                     $userId = $event->data['object']['metadata']['customer_id'];
                 }
+                $amount = $event->data['object']['amount_total'];
+                $tax = 30 + ($amount * 0.029);
+                $tax = number_format((float)$tax, 2, '.', '');
                 $invoice = new Invoice;
                 $invoice->payment_id = $event->id;
                 $invoice->invoice_id = Str::random(10);
@@ -60,9 +63,10 @@ class PaymentHooksController extends Controller
                 $invoice->status = 'paid';
                 $invoice->response = $event->all();
                 $invoice->data = $event->data['object']['metadata'];
-                $invoice->amount_paid = $event->data['object']['amount_total'] /  100;
+                $invoice->amount_paid = $amount;
+                $invoice->tax = $tax;
                 $invoice->save();
-                $invoice->user->updateBalance($invoice->amount_paid, 'Payment received for invoice #'.$invoice->id);
+                $invoice->user->updateBalance($amount - $tax, 'Payment received for invoice #'.$invoice->id);
                 DB::commit();
             }
         } catch (\Exeception $th) {
