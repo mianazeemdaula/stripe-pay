@@ -18,7 +18,7 @@
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tx ID</th>
+                                ID</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Note</th>
@@ -45,7 +45,7 @@
                         @foreach ($collection as $item)
                             <tr class="border-b-2">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->payment_id }}
+                                    {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->response['data']['object']['customer_details']['email'] ?? '' }}
