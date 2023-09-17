@@ -27,12 +27,16 @@ class PaymentHooksController extends Controller
                     DB::beginTransaction();
                     $invoice = Invoice::where('invoice_id', $event->data['object']['metadata']['invoice_id'])->first();
                     if($invoice) {
+                        $amount = $event->data['object']['amount_received'] ?? $event->data['object']['amount_total'] ?? 0;
+                        $tax = (30 + ($amount * 0.029) / 100);
+                        $tax = number_format((float)$tax, 2, '.', '');
                         $invoice->status = 'paid';
                         $invoice->response = $event->all();
                         $invoice->data = $event->data['object']['metadata'];
-                        $invoice->amount_paid = intval($event->data['object']['amount_received'] /  100);
+                        $invoice->amount_paid = ($amount / 100);
+                        $invoice->tax = $tax;
                         $invoice->save();
-                        $invoice->user->updateBalance($invoice->amount_paid, 'Payment received for invoice #'.$invoice->invoice_id);
+                        $invoice->user->updateBalance($invoice->amount_paid - $tax, 'Payment received for invoice #'.$invoice->invoice_id);
                     }
                     DB::commit();
                 }
