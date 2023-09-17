@@ -52,7 +52,7 @@ class PaymentHooksController extends Controller
                     $userId = $event->data['object']['metadata']['customer_id'];
                 }
                 $amount = $event->data['object']['amount_total'];
-                $tax = 30 + ($amount * 0.029);
+                $tax = (30 + ($amount * 0.029) / 100);
                 $tax = number_format((float)$tax, 2, '.', '');
                 $invoice = new Invoice;
                 $invoice->payment_id = $event->id;

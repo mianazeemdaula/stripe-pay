@@ -49,10 +49,20 @@ Route::get('invoice-success/{id}', [InvoiceController::class, 'successInvoice'])
 Route::get('invoice-cancel/{id}', [InvoiceController::class, 'cancelInvoice']);
 
 Route::get('datafeed', function(){
+    
     $invoices = \App\Models\Invoice::all();
     foreach($invoices as $invoice){
         $invoice->tax = ($invoice->amount_paid * 0.029) + 0.30;
         $invoice->save();
     }
+    $userIds =  \App\Models\Invoice::distinct('user_id')->pluck('user_id');
+    foreach($userIds as $id){
+        $amountPaid = \App\Models\Invoice::where('user_id',$id)->sum('amount_paid');
+        $tax = \App\Models\Invoice::where('user_id',$id)->sum('tax');
+        $user = \App\Models\User::find($id);
+        $user->balance = $amountPaid - $tax;
+        $user->save();
+    }
+    return 'done';
 });
 
