@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/login',[App\Http\Controllers\AuthController::class, 'login']);
+Route::get('/login',[App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('/login',[App\Http\Controllers\AuthController::class, 'doLogin']);
 Route::get('/signout',[App\Http\Controllers\AuthController::class, 'logout']);
 

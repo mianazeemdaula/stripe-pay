@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Stripe\Stripe;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class AuthController extends Controller
@@ -44,7 +46,12 @@ class AuthController extends Controller
             Stripe::setApiKey(env('STRIPE_SECRET'));
             $balance = \Stripe\Balance::retrieve();
         }
-        return view('auth.dashboard', compact('balance'));
+        $sales = \App\Models\Invoice::where('created_at', '>=', Carbon::now()->subDays(10))
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(amount_paid - tax) as total'))
+        ->whereUserId(auth()->user()->id)
+        ->groupBy(DB::raw('DATE(created_at)'))
+        ->get();
+        return view('auth.dashboard', compact('balance', 'sales'));
     }
 
     public function logout(Request $request)

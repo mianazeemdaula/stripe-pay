@@ -21,7 +21,7 @@
     @endphp
     <header class="header">
         <div class="container">
-            <div class="flex flex-wrap h-16 items-center justify-between w-full">
+            <div class="flex flex-wrap h-16 items-center justify-between w-full bg-white">
                 <img src="{{ asset('/images/logo/original.png') }}" alt="" class="w-40">
                 <div class="flex items-center space-x-4">
                     <a href='' class="relative">
