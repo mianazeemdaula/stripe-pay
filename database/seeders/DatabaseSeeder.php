@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::factory()->create([
             'name' => 'Admin',
-            'email' => 'officialwakeelahmad@gmail.com',
+            'email' => 'wakeel@mail.com',
             'password' => bcrypt('@#12345base'),
         ]);
 

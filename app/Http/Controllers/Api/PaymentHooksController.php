@@ -28,7 +28,7 @@ class PaymentHooksController extends Controller
                     $invoice = Invoice::where('invoice_id', $event->data['object']['metadata']['invoice_id'])->first();
                     if($invoice) {
                         $amount = $event->data['object']['amount_received'] ?? $event->data['object']['amount_total'] ?? 0;
-                        $tax = (30 + ($amount * 0.029) / 100);
+                        $tax = (30 + ($amount * 0.029)) / 100;
                         $tax = number_format((float)$tax, 2, '.', '');
                         $invoice->status = 'paid';
                         $invoice->response = $event->all();
