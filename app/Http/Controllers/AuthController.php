@@ -47,9 +47,11 @@ class AuthController extends Controller
             $balance = \Stripe\Balance::retrieve();
         }
         $sales = \App\Models\Invoice::where('created_at', '>=', Carbon::now()->subDays(10))
-        ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(amount_paid - tax) as total'))
-        ->whereUserId(auth()->user()->id)
-        ->groupBy(DB::raw('DATE(created_at)'))
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(amount_paid - tax) as total'));
+        if(auth()->user()->type !== 'admin'){
+            $sales->whereUserId(auth()->user()->id);
+        }
+        $sales->groupBy(DB::raw('DATE(created_at)'))
         ->get();
         return view('auth.dashboard', compact('balance', 'sales'));
     }
