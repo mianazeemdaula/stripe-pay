@@ -99,4 +99,8 @@ class PaymentHooksController extends Controller
 
         return response()->json($payments);
     }
+
+    function squareCashAppPayment(Request $event) {
+        Log::debug($event->all());
+    }
 }

@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('stripe-pay-hooks', [PaymentHooksController::class, 'stripePayment']);
 Route::post('stripe-paylink-hooks', [PaymentHooksController::class, 'stripeLinkPayment']);
+Route::post('square-hooks', [PaymentHooksController::class, 'squareCashAppPayment']);
 
 // Path: routes/api.php
 Route::get('stripe-payments', [PaymentHooksController::class, 'getAllPaymentsWithMetadata']);

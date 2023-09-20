@@ -17,6 +17,7 @@ use Stripe\Stripe;
 
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\SquareController;
 
 Route::get('/', function () {
     return view('index');
@@ -39,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+
+// Payment gateways routes
+Route::get('sqaure', [SquareController::class, 'index']);
 
 // Payment gateways routes
 Route::get('cashapp/{invoice}', [InvoiceController::class, 'cashapp']);
