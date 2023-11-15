@@ -62,7 +62,6 @@ class DatabaseSeeder extends Seeder
             'payment_gateway_id' => 1,
             'tx_id' => Str::random(10),
             'amount' => 10,
-            'amount_paid' => 10,
             'tax' => 0.5,
             'status' => 'paid',
         ]);
