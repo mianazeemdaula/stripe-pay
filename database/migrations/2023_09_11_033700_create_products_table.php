@@ -16,7 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name', 100);
             $table->string('description')->nullable();
+            $table->string('image')->nullable();
             $table->float('price')->default(0);
+            $table->float('discount')->default(0);
+            $table->float('tax')->default(0);
+            $table->boolean('active')->default(true);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

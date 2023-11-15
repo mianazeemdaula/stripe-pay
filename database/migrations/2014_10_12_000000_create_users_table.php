@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->float('balance')->default(0);
             $table->boolean('active')->default(true);
-            $table->string('type',10)->default('user');
+            $table->string('tag',10)->unique();
             $table->rememberToken();
             $table->timestamps();
         });

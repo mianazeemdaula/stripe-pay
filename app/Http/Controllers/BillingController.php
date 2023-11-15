@@ -11,43 +11,40 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 use App\Models\Invoice;
+use App\Models\User;
 
 class BillingController extends Controller
 {
     public function cashAppSession(Request $request)
     {
       $request->validate([
-        'invoice_id' => 'required',
+        'tag' => 'required',
         'amount' => 'required',
       ]);
       Stripe::setApiKey(env('STRIPE_SECRET'));
-      $invoice = Invoice::where('invoice_id', $request->invoice_id)->firstOrFail();
+      $user = User::where('tag', $request->tag)->firstOrFail();
       $session = Session::create([
         'payment_method_types' => ['cashapp'],
-        'success_url' => url("/invoice-success/$invoice->id"),
-        'cancel_url' => url("/invoice-cancel/$invoice->id"),
+        'success_url' => url("/invoice-success/$request->tag"),
+        'cancel_url' => url("/invoice-cancel/$request->tag"),
         'mode' => 'payment',
-        'customer_email' => Str::random(6) . '@gmail.com',
+        'customer_email' => $user->email,
         'payment_intent_data' => [
           'metadata' => [
-            'invoice_id' => $request->invoice_id,
+            'user_tag' => $request->tag,
           ],
         ],
         'line_items' => [[
             'price_data' => [
               'currency' => 'usd',
               'product_data' => [
-                'name' => $invoice->product->name,
+                'name' => 'Topup account',
               ],
               'unit_amount' => intval($request->amount * 100),
             ],
             'quantity' => 1,
           ]],
       ]);
-      Log::debug($session);
-      $invoice->payment_id = $session->id;
-      $invoice->amount = $request->amount;
-      $invoice->save();
       return response()->json($session->id, 200);
     }
 }

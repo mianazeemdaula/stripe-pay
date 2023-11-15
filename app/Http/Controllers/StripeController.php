@@ -21,4 +21,21 @@ class StripeController extends Controller
         $account = Account::retrieve($id);
         return response()->json($account, 200);
     }
+
+    // create account
+    public function setExternalAccount(){
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+        $account = Account::createExternalAccount(
+            'acct_1J5X2t2eZvKYlo2C',
+            [
+                'external_account' => [
+                    'country' => 'US',
+                    'currency' => 'usd',
+                    'routing_number' => '110000000',
+                    'account_number' => '000123456789',
+                    'account_holder_name' => 'Jenny Rosen',
+                ],
+            ]
+        );
+    }
 }

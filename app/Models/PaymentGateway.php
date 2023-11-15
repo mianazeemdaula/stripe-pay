@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentGateway extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'active',
+        'config',
+    ];
+
+    protected $casts = [
+        'config' => 'array',
+    ];
+
 }

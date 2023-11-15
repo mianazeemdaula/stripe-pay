@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->float('amount')->default(0);
             $table->string('description')->nullable();
-            $table->string('type',10);
+            $table->float('debit')->default(0);
+            $table->float('credit')->default(0);
+            $table->float('balance')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

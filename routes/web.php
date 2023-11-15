@@ -46,9 +46,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('sqaure', [SquareController::class, 'index']);
 Route::get('stripe/accounts', [StripeController::class, 'getAllAccounts']);
 Route::get('stripe/account/{id}', [StripeController::class, 'getAccount']);
+Route::get('stripe/set-account', [StripeController::class, 'setExternalAccount']);
 
 // Payment gateways routes
-Route::get('cashapp/{invoice}', [InvoiceController::class, 'cashapp']);
+Route::get('invoice/{tag}', [InvoiceController::class, 'cashapp']);
 Route::post('cashapp-session', [BillingController::class, 'cashAppSession']);
 
 // Success and cancel payments routes
@@ -70,6 +71,13 @@ Route::get('datafeed', function(){
         $user->balance = $amountPaid - $tax;
         $user->save();
     }
+    return 'done';
+});
+
+Route::get('/test', function(){
+    $user = \App\Models\User::find(2);
+    $user->updateBalance(10, 'Add balance');
+    $user->updateBalance(-5, 'withdraw balance');
     return 'done';
 });
 
