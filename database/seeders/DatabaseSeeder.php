@@ -28,8 +28,16 @@ class DatabaseSeeder extends Seeder
         $user->assignRole('admin');
 
         $user = \App\Models\User::factory()->create([
+            'name' => 'Mohsin',
+            'email' => 'datascience@mail.com',
+            'password' => bcrypt('@#12345mohsin'),
+            'tag' => Str::random(10),
+        ]);
+        $user->assignRole('merchant');
+
+        $user = \App\Models\User::factory()->create([
             'name' => 'Admin',
-            'email' => 'wakeel@mail.com',
+            'email' => 'officalbusiness@mail.com',
             'password' => bcrypt('@#12345base'),
             'tag' => Str::random(10),
         ]);
