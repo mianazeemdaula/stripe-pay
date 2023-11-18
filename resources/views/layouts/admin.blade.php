@@ -13,6 +13,7 @@
             font-family: 'Poppins-Regular', sans-serif;
         }
     </style>
+    @yield('header')
 </head>
 
 <body>
@@ -61,34 +62,10 @@
                     <i class="bi-grid"></i>
                     <a href="{{ url('dashboard/') }}">Home</a>
                 </li>
-                {{-- <li @if ($page == 'students') class="active" @endif>
-                    <i class="bi-people"></i>
-                    <a href="{{ url('admin.students.index') }}">Students</a>
-                </li> --}}
                 <li @if ($page == 'invoices') class="active" @endif>
                     <i class="bi-receipt"></i>
                     <a href="{{ route('user.invoices.index') }}">Payments</a>
                 </li>
-                {{-- <li @if ($page == 'products') class="active" @endif>
-                    <i class="bi-currency-dollar"></i>
-                    <a href="{{ route('user.products.index') }}">Products</a>
-                </li> --}}
-                {{-- <li @if ($page == 'teamleaders') class="active" @endif>
-                    <i class="bi-diagram-2"></i>
-                    <a href="{{ url('admin.teamleaders.index') }}">Team Leaders</a>
-                </li>
-                <li @if ($page == 'courses') class="active" @endif>
-                    <i class="bi-book"></i>
-                    <a href="{{ url('admin.courses.index') }}">Courses</a>
-                </li>
-                <li @if ($page == 'faqs') class="active" @endif>
-                    <i class="bi-question-circle"></i>
-                    <a href="{{ url('admin.faq-cats.index') }}">FAQs</a>
-                </li>
-                <li>
-                    <i class="bi-receipt"></i>
-                    <a href="{{ url('/teamcsv') }}">Download Sheet</a>
-                </li> --}}
                 <li>
                     <i class="bi-power"></i>
                     <a href="{{ url('signout') }}">Signout</a>

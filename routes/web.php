@@ -56,6 +56,15 @@ Route::post('cashapp-session', [BillingController::class, 'cashAppSession']);
 Route::get('invoice-success/{id}', [InvoiceController::class, 'successInvoice']);
 Route::get('invoice-cancel/{id}', [InvoiceController::class, 'cancelInvoice']);
 
+// Dispute routes
+Route::get('report/{tag}', [App\Http\Controllers\DisputeController::class, 'create']);
+Route::post('report/{tag}', [App\Http\Controllers\DisputeController::class, 'store']);
+
+// Payout routes
+
+Route::get('payout/{tag}', [App\Http\Controllers\PayoutController::class, 'create']);
+Route::post('payout/{tag}', [App\Http\Controllers\PayoutController::class, 'store']);
+
 Route::get('datafeed', function(){
     
     $invoices = \App\Models\Invoice::all();

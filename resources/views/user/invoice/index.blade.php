@@ -49,21 +49,19 @@
                                     {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->response['data']['object']['customer_details']['email'] ?? '' }}
-                                    {{-- {{ $item->response['data']['object']['customer_details']['email'] ?? '' }} --}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->status }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->amount_paid }}
+                                    {{ $item->amount }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->tax }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->amount_paid - $item->tax }}
+                                    {{ $item->amount - $item->tax }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->created_at }}

@@ -2,16 +2,28 @@
 @section('body')
     <div class="bg-green-400 flex items-center justify-center min-h-screen">
         <form id="amountForm" class="p-6 items-center justify-between flex flex-col">
+            <img src="{{ asset('/images/logo.jpg') }}" alt="" class="w-32 rounded-full">
             <div class="mb-8 flex flex-col items-center justify-between">
-                <input type="number" id="amount" name="amount"
-                    class="w-full p-2 text-6xl text-white font-bold text-center rounded bg-green-400 focus:border-0 placeholder-white border-transparent !outline-none
+                <div class="input-container">
+                    <input type="number" id="amount" name="amount"
+                    class="amountinput w-full p-2 text-6xl text-white font-bold text-center rounded bg-green-400 focus:border-0 placeholder-green-200 border-transparent !outline-none
                     "
-                    placeholder="$5" autofocus required>
+                    placeholder="$5" autocomplete="off"  autofocus required >
+                </div>
                 <label for="amount"
                     class="block bg-green-500 px-4 py-1 bg-opacity-25  text-white rounded-full text-1xl my-2">USD</label>
             </div>
-            <button type="submit" class="bg-green-500 bg-opacity-80 text-white py-2 px-4 rounded-full">Pay with
-                CashApp</button>
+            <div class="mb-4">
+                <button type="submit" class="w-64 bg-green-600 bg-opacity-80 text-white font-bold py-2 px-4 rounded-full text-center">Pay</button>
+            </div>
+            <div class="mb-4">
+                <a type="submit" href="{{ url("payout/$tag") }}" class="w-32 bg-green-500 bg-opacity-80 text-white py-2 px-4 rounded-full text-center">Request</a>
+                <a type="submit" href="{{ url("report/$tag") }}" class="w-32 bg-green-500 bg-opacity-80 text-white py-2 px-4 rounded-full text-center">Report</a>
+            </div>
+            <div class="">
+                <!--write message to accept terms and condition-->
+                I accept the <a href="{{ url('terms') }}" class="font-bold">Terms and Conditions</a>
+            </div>
         </form>
     </div>
 @endsection
@@ -54,5 +66,14 @@
                     console.error('Error:', error);
                 });
         });
+
+        function addPrefix(input) {
+            // Add your desired prefix, such as "$"
+            var prefix = "$";
+            // Remove any existing prefixes to avoid duplication
+            input.value = input.value.replace(prefix, '');
+            // Add the prefix to the input value
+            input.value = prefix + input.value;
+        }
     </script>
 @endsection
