@@ -33,7 +33,6 @@ class PaymentHooksController extends Controller
                         $tax = number_format((float)$tax, 2, '.', '');
                         $invoice = new Invoice;
                         $invoice->status = 'paid';
-                        $invoice->data = $event->data['object']['metadata'];
                         $invoice->amount = ($amount / 100);
                         $invoice->tax = $tax;
                         $invoice->payment_gateway_id = 1;
