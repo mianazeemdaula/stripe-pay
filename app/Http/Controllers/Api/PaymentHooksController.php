@@ -24,6 +24,7 @@ class PaymentHooksController extends Controller
     public function stripePayment(Request $event) {
         try {
             Log::debug($event->headers->all());
+            Log::debug($event->all());
             if($event->id && $event->type == 'payment_intent.succeeded') {
                 if(isset($event->data['object']['metadata']['user_tag'])){
                     DB::beginTransaction();
