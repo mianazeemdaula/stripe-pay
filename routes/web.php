@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Stripe\Stripe;
 
+use Stripe\Payout;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ use App\Http\Controllers\BillingController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SquareController;
 use App\Http\Controllers\StripeController;
+
+
 
 Route::get('/', function () {
     return view('index');
@@ -88,5 +91,11 @@ Route::get('/test', function(){
     $user->updateBalance(10, 'Add balance');
     $user->updateBalance(-5, 'withdraw balance');
     return 'done';
+});
+
+Route::get('/asldjaljsflasdj', function(){
+    Stripe::setApiKey(env('STRIPE_SECRET'));
+    $data = Payout::all();
+    return $data;
 });
 
