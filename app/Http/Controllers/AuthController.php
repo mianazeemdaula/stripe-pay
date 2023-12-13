@@ -42,7 +42,7 @@ class AuthController extends Controller
     public function dashboard()
     {
         $balance = null;
-        if(auth()->user()->type == 'admin'){
+        if(auth()->user()->hasRole('admin')){
             Stripe::setApiKey(env('STRIPE_SECRET'));
             $balance = \Stripe\Balance::retrieve();
         }

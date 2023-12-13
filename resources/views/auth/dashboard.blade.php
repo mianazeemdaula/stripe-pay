@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('body')
-    @if (auth()->user()->type == 'admin')
+    @role('admin')
         Balance $: {{ $balance->available[0]['amount'] / 100 }}
         Pending $: {{ $balance->pending[0]['amount'] / 100 }}
-    @endif
+    @endrole
 
     <div class="w-96">
 
