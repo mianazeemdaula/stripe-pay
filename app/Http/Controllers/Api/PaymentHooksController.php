@@ -16,15 +16,20 @@ use App\Models\User;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\Transactions;
-
+use Stripe\Event;
 
 class PaymentHooksController extends Controller
 {
     
-    public function stripePayment(Request $event) {
+    public function stripePayment(Request $request) {
         try {
-            Log::debug($event->headers->all());
-            Log::debug($event->all());
+            Log::debug($request->headers->all());
+            Log::debug($request->all());
+            $payload = file_get_contents('php://input');
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            $event = Event::constructFrom(
+                json_decode($payload, true)
+            );
             if($event->id && $event->type == 'payment_intent.succeeded' && $event->livemode == true) {
                 if(isset($event->data['object']['metadata']['user_tag'])){
                     DB::beginTransaction();
