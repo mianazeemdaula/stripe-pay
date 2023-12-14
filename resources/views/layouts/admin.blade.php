@@ -67,10 +67,12 @@
                     <a href="{{ route('user.invoices.index') }}">Payments</a>
                 </li>
 
+                @role('admin')
                 <li @if ($page == 'users') class="active" @endif>
-                    <i class="bi-users"></i>
+                    <i class="bi-people-fill"></i>
                     <a href="{{ route('admin.users.index') }}">Users</a>
                 </li>
+                @endrole
                 <li>
                     <i class="bi-power"></i>
                     <a href="{{ url('signout') }}">Signout</a>
