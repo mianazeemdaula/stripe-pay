@@ -3,12 +3,12 @@
 @section('body')
     <div class="flex space-x-2 items-center">
         <span class="bi bi-gear text-2xl"></span>
-        <h2 class="text-xl">Payments</h2>
+        <h2 class="text-xl">Users</h2>
     </div>
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
-            <h2 class="text-white">Payments</h2>
-            <div class="text-white">USD {{ auth()->user()->transaction->balance ?? '0' }}</div>
+            <h2 class="text-white">Users</h2>
+            <div class="text-white"></div>
             {{-- <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a> --}}
         </div>
         <div class="px-4 pb-2">
@@ -21,22 +21,17 @@
                                 ID</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Note</th>
+                                Name</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
+                                Email</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Amount Paid</th>
+                                Balance</th>
 
-                            <th scope="col"
+                                <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tax
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Received
-                            </th>
+                                Tag</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Time</th>
@@ -49,19 +44,17 @@
                                     {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $item->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->status }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->amount }}
+                                    {{ $item->email }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->tax }}
+                                    {{ $item->transaction->balance ?? 0 }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->amount - $item->tax }}
+                                    {{ $item->tag }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->created_at }}

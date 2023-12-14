@@ -9,8 +9,6 @@
                     <a href="{{ url('admin') }}" class="link">Home</a>
                     <div>/</div>
                     <div>User</div>
-                    <div>/</div>
-                    <div>Edit</div>
                 </div>
             </div>
             <div class="text-slate-500">{{ today()->format('d/m/Y') }}</div>
@@ -46,16 +44,28 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 mt-3 text-slate-600 gap-4">
                             <div class="flex flex-col">
                                 <label for="">Name*</label>
-                                <select name="product_id" id="" class="p-2 rounded border">
-                                    @foreach ($products as $item)
-                                        <option value="{{ $item->id }}"> {{ $item->name }} </option>
-                                    @endforeach
-                                </select>
-                                @error('product_id')
+                                <input type="text" name="name" value="{{ old('name') }}"
+                                    class="border border-gray-300 p-2 rounded-lg" placeholder="Name">
+                                @error('name')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-
+                            <div class="flex flex-col">
+                                <label for="">Email*</label>
+                                <input type="email" name="email" value="{{ old('email') }}"
+                                    class="border border-gray-300 p-2 rounded-lg" placeholder="Email">
+                                @error('email')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="flex flex-col">
+                                <label for="">Password*</label>
+                                <input type="password" name="password" value="{{ old('password') }}"
+                                    class="border border-gray-300 p-2 rounded-lg" placeholder="Password">
+                                @error('password')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
                             <div class="mt-4">
                                 <button type="submit" class="bg-green-500 p-2 rounded text-white">Submit Now</button>
                             </div>
