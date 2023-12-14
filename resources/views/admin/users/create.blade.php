@@ -38,7 +38,7 @@
                 <div class="p-6 rounded-lg  bg-white">
                     <div class="h2">Create Invoice</div>
                     <div class="text-slate-500 mt-1">Please provide following information</div>
-                    <form action="{{ route('admin.user.store') }}" method='post' class="flex flex-col w-full mt-4"
+                    <form action="{{ route('admin.users.store') }}" method='post' class="flex flex-col w-full mt-4"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-1 lg:grid-cols-2 mt-3 text-slate-600 gap-4">
