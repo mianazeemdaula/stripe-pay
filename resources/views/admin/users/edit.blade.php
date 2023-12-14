@@ -41,6 +41,7 @@
                     <form action="{{ route('admin.users.update', $model->id) }}" method='post' class="flex flex-col w-full mt-4"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <div class="grid grid-cols-1 lg:grid-cols-2 mt-3 text-slate-600 gap-4">
                             <div class="flex flex-col">
                                 <label for="">Name*</label>
