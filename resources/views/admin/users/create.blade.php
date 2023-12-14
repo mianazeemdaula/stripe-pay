@@ -66,6 +66,17 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
+                            <div class="flex flex-col">
+                                <label for="">Role*</label>
+                                <select name="role" id="role" class="border border-gray-300 p-2 rounded-lg">
+                                    <option value="admin">Admin</option>
+                                    <option value="merchant">Merchant</option>
+                                    <option value="user">User</option>
+                                </select>
+                                @error('role')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
                             <div class="mt-4">
                                 <button type="submit" class="bg-green-500 p-2 rounded text-white">Submit Now</button>
                             </div>
