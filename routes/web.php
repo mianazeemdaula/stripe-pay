@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\AuthController::class, 'dashboard'])->name('dashboard');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-        
+        Route::resource('users',\App\Http\Controllers\Admin\UserController::class);
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
