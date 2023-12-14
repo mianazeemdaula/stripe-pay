@@ -34,7 +34,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'email|required|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
             'role' => 'required|in:admin,merchant'
         ]);
         $user = new User();
@@ -72,7 +72,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'email|required|unique:users,email,'.$id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'nullable|string|min:8',
             'role' => 'required|in:admin,merchant'
         ]);
         $user = User::findOrFail($id);
