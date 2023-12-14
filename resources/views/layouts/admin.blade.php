@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Universal Games</title>
+    <title>Shop CodeCryptex</title>
     <style>
         body {
             font-family: 'Poppins-Regular', sans-serif;
