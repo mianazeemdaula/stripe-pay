@@ -36,11 +36,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin'] ], function () {
         Route::resource('users',\App\Http\Controllers\Admin\UserController::class);
+        Route::resource('withdrawals',\App\Http\Controllers\Admin\WithdrawalController::class);
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::resource('products',\App\Http\Controllers\User\ProductController::class);
         Route::resource('invoices',\App\Http\Controllers\User\InvoiceController::class);
+        Route::resource('withdrawals',\App\Http\Controllers\User\WithdrawalController::class);
     });
 });
 
