@@ -8,7 +8,6 @@
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
             <h2 class="text-white">Withdrawal</h2>
-            <div class="text-white">USD {{ auth()->user()->transaction->balance ?? '0' }}</div>
             <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.withdrawals.create') }}">Reqeust withdrawal</a>
         </div>
         <div class="px-4 pb-2">

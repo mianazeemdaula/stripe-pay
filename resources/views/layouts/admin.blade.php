@@ -80,7 +80,7 @@
                 @role('merchant')
                 <li @if ($page == 'users') class="active" @endif>
                     <i class="bi-people-fill"></i>
-                    <a href="{{ route('admin.withdrawals.index') }}">Withdrawals</a>
+                    <a href="{{ route('user.withdrawals.index') }}">Withdrawals</a>
                 </li>
                 @endrole
                 <li>
