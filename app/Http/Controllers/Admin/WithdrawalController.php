@@ -14,8 +14,8 @@ class WithdrawalController extends Controller
      */
     public function index()
     {
-        $collections = Withdrawal::orderBy('id', 'desc')->paginate();
-        return view('admin.withdrawals.index', compact('collections'));
+        $collection = Withdrawal::orderBy('id', 'desc')->paginate();
+        return view('admin.withdrawals.index', compact('collection'));
     }
 
     /**

@@ -12,8 +12,8 @@ class WithdrawalController extends Controller
      */
     public function index()
     {
-        $collections = auth()->user()->withdrawals()->orderBy('id', 'desc')->paginate(10);
-        return view('user.withdrawals.index', compact('collections'));
+        $collection = auth()->user()->withdrawals()->orderBy('id', 'desc')->paginate(10);
+        return view('user.withdrawals.index', compact('collection'));
     }
 
     /**
