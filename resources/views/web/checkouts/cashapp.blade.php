@@ -5,10 +5,8 @@
             <img src="{{ asset('/images/logo.jpg') }}" alt="" class="w-32 rounded-full">
             <div class="mb-8 flex flex-col items-center justify-between">
                 <div class="input-container">
-                    <input type="number" id="amount" name="amount"
-                    class="amountinput w-full p-2 text-6xl text-white font-bold text-center rounded bg-green-400 focus:border-0 placeholder-green-200 border-transparent !outline-none
-                    "
-                    placeholder="$5" autocomplete="off"  autofocus required >
+                    <input type="number" id="amount" name="amount" step="any"
+                    class="amountinput w-full p-2 text-6xl text-white font-bold text-center rounded bg-green-400 focus:border-0 placeholder-green-200 border-transparent !outline-none" placeholder="$5" autocomplete="off"  autofocus required >
                 </div>
                 <label for="amount"
                     class="block bg-green-500 px-4 py-1 bg-opacity-25  text-white rounded-full text-1xl my-2">USD</label>
