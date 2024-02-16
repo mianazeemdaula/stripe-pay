@@ -30,7 +30,7 @@
             @endif
             <div class="mb-4">
                 <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Request Amount</label>
-                <input type="number" name="amount" id="amount" class="w-full p-2 border-2 rounded-md" placeholder="$5" autocomplete="off" autofocus required>
+                <input type="number" step="any" name="amount" id="amount" class="w-full p-2 border-2 rounded-md" placeholder="$5" autocomplete="off" autofocus required>
                 @error('amount')<p class="text-red-500 text-xs mt-2">{{ $message }}</p>@enderror
             </div>
             <div class="mb-4">
