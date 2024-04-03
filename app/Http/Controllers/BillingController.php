@@ -24,7 +24,7 @@ class BillingController extends Controller
       Stripe::setApiKey(env('STRIPE_SECRET'));
       $user = User::where('tag', $request->tag)->firstOrFail();
       $session = Session::create([
-        'payment_method_types' => ['cashapp', 'card'],
+        // 'payment_method_types' => ['cashapp', 'card'],
         'success_url' => url("/invoice-success/$request->tag"),
         'cancel_url' => url("/invoice-cancel/$request->tag"),
         'mode' => 'payment',
