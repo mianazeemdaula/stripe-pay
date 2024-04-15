@@ -23,12 +23,13 @@ class BillingController extends Controller
       ]);
       Stripe::setApiKey(env('STRIPE_SECRET'));
       $user = User::where('tag', $request->tag)->firstOrFail();
+      $randProduct = "Invoice #" . Str::random(5) . " - " . $request->amount . " USD";
       $session = Session::create([
         // 'payment_method_types' => ['cashapp', 'card'],
         'success_url' => url("/invoice-success/$request->tag"),
         'cancel_url' => url("/invoice-cancel/$request->tag"),
         'mode' => 'payment',
-        'customer_email' => $user->email,
+        // 'customer_email' => $user->email,
         'payment_intent_data' => [
           'metadata' => [
             'user_tag' => $request->tag,
@@ -38,7 +39,7 @@ class BillingController extends Controller
             'price_data' => [
               'currency' => 'usd',
               'product_data' => [
-                'name' => 'Topup account',
+                'name' => $randProduct,
               ],
               'unit_amount' => intval($request->amount * 100),
             ],
