@@ -115,7 +115,7 @@
     }
 
     .step.done {
-        @apply text-secondary;
+        @apply text-zinc-800;
     }
 
     .step.done .bi-check-lg {
