@@ -38,8 +38,8 @@
                 <div class="p-6 rounded-lg  bg-white">
                     <div class="h2">Edit User</div>
                     <div class="text-slate-500 mt-1">Please provide following information</div>
-                    <form action="{{ route('admin.users.update', $model->id) }}" method='post' class="flex flex-col w-full mt-4"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('admin.users.update', $model->id) }}" method='post'
+                        class="flex flex-col w-full mt-4" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="grid grid-cols-1 lg:grid-cols-2 mt-3 text-slate-600 gap-4">
@@ -59,6 +59,15 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div class="flex flex-col">
+                                <label for="">Fee %*</label>
+                                <input type="fee" name="fee" value="{{ $model->fee }}"
+                                    class="border border-gray-300 p-2 rounded-lg" placeholder="fee">
+                                @error('fee')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
                             <div class="flex flex-col">
                                 <label for="">Password*</label>
                                 <input type="password" name="password" value=""
@@ -70,9 +79,10 @@
                             <div class="flex flex-col">
                                 <label for="">Role*</label>
                                 <select name="role" id="role" class="border border-gray-300 p-2 rounded-lg">
-                                    <option value="admin" @if($model->hasRole('admin')) selected @endif >Admin</option>
-                                    <option value="merchant" @if($model->hasRole('merchant')) selected @endif>Merchant</option>
-                                    <option value="user" @if($model->hasRole('user')) selected @endif>User</option>
+                                    <option value="admin" @if ($model->hasRole('admin')) selected @endif>Admin</option>
+                                    <option value="merchant" @if ($model->hasRole('merchant')) selected @endif>Merchant
+                                    </option>
+                                    <option value="user" @if ($model->hasRole('user')) selected @endif>User</option>
                                 </select>
                                 @error('role')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>

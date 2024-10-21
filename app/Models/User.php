@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function transaction(): HasOne
     {
-        return $this->hasOne(Transaction::class)->latest();
+        return $this->hasOne(Transaction::class)->orderBy('id','desc');
     }
 
     public function invoices(): HasMany

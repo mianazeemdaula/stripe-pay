@@ -73,11 +73,13 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'email|required|unique:users,email,'.$id,
             'password' => 'nullable|string|min:8',
-            'role' => 'required|in:admin,merchant'
+            'role' => 'required|in:admin,merchant',
+            'fee' => 'required|numeric|min:0|max:100',
         ]);
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->fee = $request->fee;
         if ($request->password) {
             $user->password = bcrypt($request->password);
         }

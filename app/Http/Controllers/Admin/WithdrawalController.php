@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Withdrawal;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class WithdrawalController extends Controller
 {
@@ -23,7 +24,9 @@ class WithdrawalController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::role('merchant')
+        ->whereHas('transaction')->get();
+        return view('admin.withdrawals.create', compact('users'));
     }
 
     /**
@@ -31,7 +34,25 @@ class WithdrawalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+            'user_id' => 'required|exists:users,id',
+            'fee' => 'required|numeric|min:0',
+        ]);
+        $user = User::findOrFail($request->user_id);
+        if ($user->transaction->balance < $request->amount) {
+            return redirect()->back()->withErrors(['amount' => 'You do not have enough balance.']);
+        }
+        $fee = ($request->amount * $request->fee) / 100;
+        $user->withdrawals()->create([
+            'amount' => $request->amount - $fee,
+            'fee' => $fee,
+            'transfer_by' => auth()->user()->id,
+            'transfer_id' => Str::random(10),
+            'status' => 'approved',
+        ]);
+        $user->updateBalance(-$request->amount, 'Withdrawal successfully.');
+        return redirect()->route('admin.users.index')->with('success', 'Withdrawal successfully.');
     }
 
     /**

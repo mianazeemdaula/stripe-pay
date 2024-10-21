@@ -68,20 +68,20 @@
                 </li>
 
                 @role('admin')
-                <li @if ($page == 'users') class="active" @endif>
-                    <i class="bi-people-fill"></i>
-                    <a href="{{ route('admin.users.index') }}">Users</a>
-                </li>
-                <li @if ($page == 'withdrawals') class="active" @endif>
-                    <i class="bi-people-fill"></i>
-                    <a href="{{ route('admin.withdrawals.index') }}">Withdrawals</a>
-                </li>
+                    <li @if ($page == 'users') class="active" @endif>
+                        <i class="bi-people-fill"></i>
+                        <a href="{{ route('admin.users.index') }}">Users</a>
+                    </li>
+                    <li @if ($page == 'withdrawals') class="active" @endif>
+                        <i class="bi-people-fill"></i>
+                        <a href="{{ route('admin.withdrawals.index') }}">Withdrawals</a>
+                    </li>
                 @endrole
                 @role('merchant')
-                <li @if ($page == 'users') class="active" @endif>
-                    <i class="bi-people-fill"></i>
-                    <a href="{{ route('user.withdrawals.index') }}">Withdrawals</a>
-                </li>
+                    <li @if ($page == 'users') class="active" @endif>
+                        <i class="bi-people-fill"></i>
+                        <a href="{{ route('user.withdrawals.index') }}">Withdrawals</a>
+                    </li>
                 @endrole
                 <li>
                     <i class="bi-power"></i>

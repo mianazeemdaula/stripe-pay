@@ -29,12 +29,15 @@
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Balance</th>
 
-                                <th scope="col"
+                            <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Tag</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Time</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Action</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -58,6 +61,16 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->created_at }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <a href="{{ route('admin.users.edit', $item->id) }}"
+                                        class=" text-blue-500 p-2 rounded-md">Edit</a>
+                                    {{-- <form action="{{ route('admin.users.destroy', $item->id) }}" method="post"
+                                        class="inline">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="bg-red-500 text-white p-2 rounded-md">Delete</button>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach
