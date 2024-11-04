@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Stripe\Stripe;
-
 use Stripe\Payout;
+use Stripe\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin'] ], function () {
         Route::resource('users',\App\Http\Controllers\Admin\UserController::class);
         Route::resource('withdrawals',\App\Http\Controllers\Admin\WithdrawalController::class);
+        Route::resource('payouts',\App\Http\Controllers\Admin\StripPayoutController::class);
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
@@ -89,10 +90,9 @@ Route::get('datafeed', function(){
 });
 
 Route::get('/test', function(){
-    $user = \App\Models\User::find(2);
-    $user->updateBalance(10, 'Add balance');
-    $user->updateBalance(-5, 'withdraw balance');
-    return 'done';
+    $invoice = \App\Models\Invoice::find(763);
+    Stripe::setApiKey(env('STRIPE_SECRET'));
+    return Event::retrieve($invoice->tx_id);
 });
 
 Route::get('/asldjaljsflasdj', function(){

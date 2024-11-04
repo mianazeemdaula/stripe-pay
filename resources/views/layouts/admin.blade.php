@@ -62,22 +62,25 @@
                     <i class="bi-grid"></i>
                     <a href="{{ url('dashboard/') }}">Home</a>
                 </li>
-                <li @if ($page == 'invoices') class="active" @endif>
-                    <i class="bi-receipt"></i>
-                    <a href="{{ route('user.invoices.index') }}">Payments</a>
-                </li>
-
                 @role('admin')
                     <li @if ($page == 'users') class="active" @endif>
                         <i class="bi-people-fill"></i>
                         <a href="{{ route('admin.users.index') }}">Users</a>
                     </li>
                     <li @if ($page == 'withdrawals') class="active" @endif>
-                        <i class="bi-people-fill"></i>
+                        <i class="bi-currency-exchange"></i>
                         <a href="{{ route('admin.withdrawals.index') }}">Withdrawals</a>
+                    </li>
+                    <li @if ($page == 'payouts') class="active" @endif>
+                        <i class="bi-bank"></i>
+                        <a href="{{ route('admin.payouts.index') }}">Stripe Payouts</a>
                     </li>
                 @endrole
                 @role('merchant')
+                    <li @if ($page == 'invoices') class="active" @endif>
+                        <i class="bi-receipt"></i>
+                        <a href="{{ route('user.invoices.index') }}">Payments</a>
+                    </li>
                     <li @if ($page == 'users') class="active" @endif>
                         <i class="bi-people-fill"></i>
                         <a href="{{ route('user.withdrawals.index') }}">Withdrawals</a>

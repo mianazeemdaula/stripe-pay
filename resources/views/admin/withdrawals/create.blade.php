@@ -83,6 +83,17 @@
                         Current Balance
                     </div>
                     <div class="font-bold" id="balance"></div>
+
+                    <div>
+                        Fee
+                    </div>
+                    <div class="font-bold" id="feevalue"></div>
+
+                    <div>
+                        Amount to be paid
+                    </div>
+                    <div class="font-bold" id="amounttobepaid"></div>
+
                 </div>
             </div>
 
@@ -91,13 +102,45 @@
 @endsection
 @section('script')
     <script>
-        // on change of the user id select the data-amount and set the value to the amount field
-        document.getElementById('user_id').addEventListener('change', function() {
+        function calculate() {
             let amount = this.options[this.selectedIndex].getAttribute('data-amount');
             let fee = this.options[this.selectedIndex].getAttribute('data-fee');
             document.getElementById('amount').value = amount;
             document.getElementById('fee').value = fee;
             document.getElementById('balance').innerHTML = amount;
-        })
+            document.getElementById('feevalue').innerHTML = fee * amount / 100;
+            document.getElementById('amounttobepaid').innerHTML = amount - (fee * amount / 100);
+        }
+        // on change of the user id select the data-amount and set the value to the amount field
+        document.getElementById('user_id').addEventListener('change', function() {
+            calculate.call(this);
+        });
+        // on change of the amount field calculate
+        document.getElementById('amount').addEventListener('change', function() {
+            // check if the amount enter more then the balance
+            let balance = document.getElementById('user_id').options[document.getElementById('user_id')
+                    .selectedIndex]
+                .getAttribute('data-amount');
+            if (this.value > balance) {
+                alert('Amount can not be more then the balance');
+                this.value = balance;
+            }
+            let amount = this.value;
+            let fee = document.getElementById('fee').value;
+            document.getElementById('balance').innerHTML = amount;
+            document.getElementById('feevalue').innerHTML = fee * amount / 100;
+            document.getElementById('amounttobepaid').innerHTML = amount - (fee * amount / 100);
+        });
+
+        // on change of the fee field
+        document.getElementById('fee').addEventListener('change', function() {
+            let fee = this.value;
+            let amount = document.getElementById('amount').value;
+            document.getElementById('balance').innerHTML = amount;
+            document.getElementById('feevalue').innerHTML = fee * amount / 100;
+            document.getElementById('amounttobepaid').innerHTML = amount - (fee * amount / 100);
+        });
+        // on load calculate the amount
+        calculate.call(document.getElementById('user_id'));
     </script>
 @endsection
