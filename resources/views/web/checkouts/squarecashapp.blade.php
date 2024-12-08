@@ -16,7 +16,7 @@
                 countryCode: 'US',
                 currencyCode: 'USD',
                 total: {
-                    amount: amount,
+                    amount: '5.00',
                     label: 'Total',
                 },
             });
