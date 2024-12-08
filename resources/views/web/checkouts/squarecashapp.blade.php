@@ -51,6 +51,7 @@
                 },
                 body,
             });
+            console.log(paymentResponse);
 
             if (paymentResponse.ok) {
                 return paymentResponse.json();
