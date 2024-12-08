@@ -29,6 +29,8 @@
                 redirectURL: window.location.href,
                 referenceId: "{{ $tag }}",
             });
+            const result = await cashAppPay.tokenize();
+            console.log("CashAppTokenLog", result);
             const buttonOptions = {
                 shape: 'semiround',
                 width: 'full',
