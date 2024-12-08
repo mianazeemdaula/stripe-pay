@@ -107,6 +107,7 @@
                         detail
                     }) {
                         const tokenResult = detail.tokenResult;
+                        console.log("tokenResult", detail);
                         if (tokenResult.status === 'OK') {
                             const paymentResults = await createPayment(tokenResult.token);
 
