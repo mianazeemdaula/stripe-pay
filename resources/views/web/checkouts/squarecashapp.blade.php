@@ -42,7 +42,6 @@
                 locationId,
                 sourceId: token,
                 idempotencyKey: window.crypto.randomUUID(),
-                customerId: "{{ $tag }} ",
             });
 
             const paymentResponse = await fetch('/sqaure/invoice', {

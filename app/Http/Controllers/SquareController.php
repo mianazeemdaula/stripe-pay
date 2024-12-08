@@ -96,14 +96,16 @@ class SquareController extends Controller
     public function processCashAppPayment(Request $request)
     {
         $request->validate([
-            'nonce' => 'required',
-            'amount' => 'required|integer',
+            'idempotencyKey' => 'required',
+            'amount' => 'required',
+            'sourceId' => 'required',
         ]);
 
         try {
             $payment = $this->square->processCashAppPayment(
-                $request->nonce,
-                $request->amount
+                $request->sourceId,
+                $request->amount,
+                $request->idempotencyKey,
             );
             return response()->json(['payment' => $payment]);
         } catch (\Exception $e) {

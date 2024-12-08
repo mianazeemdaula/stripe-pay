@@ -60,17 +60,18 @@ class SquareService
         }
     }
 
-    public function processCashAppPayment($nonce, $amount)
+    public function processCashAppPayment($source, $amount, $imkey)
     {
         $paymentsApi = $this->client->getPaymentsApi();
 
         $payment = [
-            'source_id' => $nonce,
+            'sourceId' => $source,
             'amount_money' => [
                 'amount' => $amount, // Amount in cents (e.g., $10.00 = 1000)
                 'currency' => 'USD',
             ],
-            'location_id' => env('SQUARE_LOCATION_ID'),
+            'locationId' => env('SQUARE_LOCATION_ID'),
+            'idempotencyKey' => $imkey
         ];
 
         try {
