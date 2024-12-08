@@ -50,6 +50,12 @@ Route::middleware(['auth'])->group(function () {
 
 // Payment gateways routes
 Route::get('sqaure', [SquareController::class, 'index']);
+
+Route::post('sqaure/invoice', [SquareController::class, 'createInvoice']);
+Route::post('sqaure/payment', [SquareController::class, 'processPayment']);
+Route::get('sqaure/cashapp', [SquareController::class, 'processCashAppPayment']);
+
+
 Route::get('stripe/accounts', [StripeController::class, 'getAllAccounts']);
 Route::get('stripe/account/{id}', [StripeController::class, 'getAccount']);
 Route::get('stripe/set-account', [StripeController::class, 'setExternalAccount']);
@@ -97,7 +103,23 @@ Route::get('/test', function(){
 
 Route::get('/asldjaljsflasdj', function(){
     Stripe::setApiKey(env('STRIPE_SECRET'));
-    $data = Payout::all();
-    return $data;
+    // Stripe get events with sort to the latest date
+    // $vents = \Stripe\Event::all(['limit' => 50, 'type' => 'payment_intent.cancelled']);
+    // dd($vents);
+    $payments = \Stripe\PaymentIntent::all([
+        'limit' => 20, // Number of payments to retrieve
+    ]);
+    return $payments;
+    $account = \Stripe\Account::retrieve();
+    return ($account);
+    $status = $account->charges_enabled; // true if charges are enabled
+    $payouts = $account->payouts_enabled; // true if payouts are enabled
+    // $requirements = $account->requirements->currently_due; // Any missing requirements
+
+    return [
+        'charges_enabled' => $status,
+        'payouts_enabled' => $payouts,
+        'missing_requirements' => $requirements ?? [],
+    ];
 });
 

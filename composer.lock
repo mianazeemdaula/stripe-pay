@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "968a1cd740c594259c5df9edbf700f3b",
+    "content-hash": "efdb144baa31ac96a4d96b7738a0de5d",
     "packages": [
         {
             "name": "apimatic/core",
@@ -3462,16 +3462,16 @@
         },
         {
             "name": "square/square",
-            "version": "30.0.0.20230816",
+            "version": "36.0.0.20240417",
             "source": {
                 "type": "git",
                 "url": "https://github.com/square/square-php-sdk.git",
-                "reference": "fedfea8b6c6f16b6a90ef0d629743ae9ae25e13d"
+                "reference": "407b00bc1d56e7f9e3f6670699ebf0dce6675ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/fedfea8b6c6f16b6a90ef0d629743ae9ae25e13d",
-                "reference": "fedfea8b6c6f16b6a90ef0d629743ae9ae25e13d",
+                "url": "https://api.github.com/repos/square/square-php-sdk/zipball/407b00bc1d56e7f9e3f6670699ebf0dce6675ce5",
+                "reference": "407b00bc1d56e7f9e3f6670699ebf0dce6675ce5",
                 "shasum": ""
             },
             "require": {
@@ -3512,9 +3512,9 @@
             ],
             "support": {
                 "issues": "https://github.com/square/square-php-sdk/issues",
-                "source": "https://github.com/square/square-php-sdk/tree/30.0.0.20230816"
+                "source": "https://github.com/square/square-php-sdk/tree/36.0.0.20240417"
             },
-            "time": "2023-08-15T21:45:55+00:00"
+            "time": "2024-04-16T22:38:36+00:00"
         },
         {
             "name": "stripe/stripe-php",
