@@ -89,7 +89,6 @@
                                 'Content-Type': 'application/json',
 
                             }
-
                             document.getElementById('amountForm').addEventListener('submit', async function(e) {
                                 e.preventDefault();
                                 let amount = document.getElementById('amount').value;

@@ -106,10 +106,10 @@ Route::get('/asldjaljsflasdj', function(){
     // Stripe get events with sort to the latest date
     // $vents = \Stripe\Event::all(['limit' => 50, 'type' => 'payment_intent.cancelled']);
     // dd($vents);
-    $payments = \Stripe\PaymentIntent::all([
-        'limit' => 20, // Number of payments to retrieve
-    ]);
-    return $payments;
+    // $payments = \Stripe\PaymentIntent::all([
+    //     'limit' => 10, // Number of payments to retrieve
+    // ]);
+    // return $payments;
     $account = \Stripe\Account::retrieve();
     return ($account);
     $status = $account->charges_enabled; // true if charges are enabled

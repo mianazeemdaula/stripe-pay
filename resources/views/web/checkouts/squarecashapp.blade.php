@@ -4,14 +4,16 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{{ asset('/css/square.css') }}" rel="stylesheet" />
-
-    <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    @if (env('APP_ENV') == 'production')
+        <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
+    @else
+        <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    @endif
     <script>
         const appId = "{{ env('SQUARE_APPLICATION_ID') }}";
         const locationId = "{{ env('SQUARE_LOCATION_ID') }}";
 
         function buildPaymentRequest(payments) {
-            const amount = document.getElementById('amount').value;
             const paymentRequest = payments.paymentRequest({
                 countryCode: 'US',
                 currencyCode: 'USD',
@@ -78,6 +80,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', async function() {
+            const loader = document.getElementById('loading-spinner');
+            loader.style.display = 'block';
             if (!window.Square) {
                 throw new Error('Square.js failed to load properly');
             }
@@ -85,13 +89,16 @@
             let payments;
             try {
                 payments = window.Square.payments(appId, locationId);
-            } catch {
+            } catch (e) {
+                console.error('Initializing Square Payments failed', e);
                 const statusContainer = document.getElementById(
                     'payment-status-container',
                 );
                 statusContainer.className = 'missing-credentials';
                 statusContainer.style.visibility = 'visible';
                 return;
+            } finally {
+                loader.style.display = 'none';
             }
 
             let cashAppPay;
@@ -134,10 +141,10 @@
 <body>
     <form id="payment-form">
         <h1>Pay with Cash App</h1>
-        <p>Enter the amount you want to pay</p>
-        <input type="text" id="amount" name="amount" placeholder="Amount" />
-        <div style="height: 5px"></div>
+        <div id="loading-spinner" style="display:none;">Loading...</div>
+
         <div id="cash-app-pay"></div>
+        <div id="card-container"></div>
     </form>
     <div id="payment-status-container"></div>
 </body>
