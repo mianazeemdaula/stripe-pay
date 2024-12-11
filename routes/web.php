@@ -49,10 +49,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Payment gateways routes
-Route::get('sqaure', [SquareController::class, 'index']);
-
-Route::post('sqaure/invoice', [SquareController::class, 'createInvoice']);
-Route::post('sqaure/payment', [SquareController::class, 'processPayment']);
+Route::get('cashapp/{tag}', [SquareController::class, 'index']);
+Route::post('cashapp/{tag}', [SquareController::class, 'getCahappPayment'])->name('sqaurecashapp');
 Route::get('sqaure/cashapp', [SquareController::class, 'processCashAppPayment']);
 
 

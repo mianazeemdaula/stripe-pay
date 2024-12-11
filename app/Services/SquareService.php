@@ -67,7 +67,7 @@ class SquareService
         $payment = [
             'sourceId' => $source,
             'amount_money' => [
-                'amount' => $amount, // Amount in cents (e.g., $10.00 = 1000)
+                'amount' => $amount, 
                 'currency' => 'USD',
             ],
             'locationId' => env('SQUARE_LOCATION_ID'),

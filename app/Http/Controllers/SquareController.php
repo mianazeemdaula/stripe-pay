@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Services\SquareService;
-
+use App\Models\User;
 
 class SquareController extends Controller
 {
@@ -17,21 +17,31 @@ class SquareController extends Controller
 
     }
 
-
-    public function index()
+    public function index($tag)
     {
-        $tag = 'f33l47GBzY';
-        return view('web.checkouts.squarecashapp', compact('tag'));
-        // $api_response = $client->getLocationsApi()->listLocations();
+        $user = User::where('tag', $tag)->first();
+        if (!$user) {
+            return response()->json(['error' => 'Invalid tag'], 404);
+        }
+        $tag = $user->tag;
+        return view('web.checkouts.cashapp', compact('tag'));
+    }
 
-        // if ($api_response->isSuccess()) {
-        //     $locations = $api_response->getResult();
-        //     return view('square', compact('locations'));
-        // } else {
-        //     $errors = $api_response->getErrors();
-        //     return response()->json($errors, 200);
-        //     return view('square', compact('errors'));
-        // }
+    public function getCahappPayment(Request $request, $tag){
+        $request->validate([
+            'amount' => 'required',
+        ]);
+        $user = User::where('tag', $tag)->first();
+        if (!$user) {
+            return response()->json(['error' => 'Invalid tag'], 404);
+        }
+        $tag = $user->tag;
+        $amount = $request->amount;
+        // check if amount is int convert it to float
+        if (!is_float($amount)) {
+            $amount = (float) $amount;
+        }
+        return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
     }
 
     public function createInvoice(Reqeust $request)

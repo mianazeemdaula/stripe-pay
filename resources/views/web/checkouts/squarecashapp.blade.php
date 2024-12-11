@@ -18,7 +18,7 @@
                 countryCode: 'US',
                 currencyCode: 'USD',
                 total: {
-                    amount: '5.00',
+                    amount: '{{ $amount }}',
                     label: 'Total',
                 },
             });
@@ -44,9 +44,10 @@
                 locationId,
                 sourceId: token,
                 idempotencyKey: window.crypto.randomUUID(),
+                amount: '{{ $amount }}',
             });
 
-            const paymentResponse = await fetch('/sqaure/invoice', {
+            const paymentResponse = await fetch('/sqaure/cashapp', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -142,7 +143,7 @@
     <form id="payment-form">
         <h1>Pay with Cash App</h1>
         <div id="loading-spinner" style="display:none;">Loading...</div>
-
+        <div class=""> You are paying ${{ $amount }}</div>
         <div id="cash-app-pay"></div>
         <div id="card-container"></div>
     </form>
