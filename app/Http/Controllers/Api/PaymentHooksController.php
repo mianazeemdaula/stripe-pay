@@ -106,8 +106,31 @@ class PaymentHooksController extends Controller
         return response()->json($payments);
     }
 
-    function squareCashAppPayment(Request $event) {
-        Log::debug($event->all());
+    function squareCashAppPayment(Request $request) {
+        Log::debug($request->all());
+        $signature = $request->header('x-square-signature');
+        $payload = $request->getContent();
+
+        // Verify the webhook signature
+        if (!$this->verifySignature($signature, $payload)) {
+            Log::error('Invalid signature for Square webhook');
+            return response()->json(['message' => 'Invalid signature'], 400);
+        }
+        $event = json_decode($payload, true);
+        switch ($event['type']) {
+            case 'payment.updated':
+                break;
+        }
+        Log::info('Square Webhook Event:', $event);
         return response()->json(['message' => 'success'],500);
+    }
+
+    private function verifySquareSignature($signature, $payload)
+    {
+        $webhookSecret = env('SQUARE_WEBHOOK_SECRET');
+
+        $hash = base64_encode(hash_hmac('sha256', $payload, $webhookSecret, true));
+
+        return hash_equals($hash, $signature);
     }
 }
