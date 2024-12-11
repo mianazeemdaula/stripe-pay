@@ -1,9 +1,7 @@
 @extends('layouts.web')
 @section('body')
     <div class="bg-green-400 flex items-center justify-center min-h-screen">
-        <form id="amountForm" class="p-4 items-center justify-between flex flex-col" method="POST"
-            action="{{ route('sqaurecashapp', $tag) }}">
-            @csrf
+        <form id="amountForm" class="p-4 items-center justify-between flex flex-col">
             {{-- <img src="{{ asset('/images/logo.jpg') }}" alt="" class="w-32 rounded-full"> --}}
             <div class="text-white font-semibold text-sm md:text-lg mb-8 text-center">
                 Enter the amount, hit pay, then choose CashApp pay to deposit. Thanks!
@@ -33,4 +31,59 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('js')
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script type="text/javascript">
+        var stripe = Stripe(
+            "{{ env('STRIPE_KEY') }}"
+        );
+        document.getElementById('amountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let amount = document.getElementById('amount').value;
+            fetch("/cashapp-session", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        _token: '{{ csrf_token() }}',
+                        'tag': '{{ $tag }}',
+                    })
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(sessionId) {
+                    return stripe.redirectToCheckout({
+                        sessionId: sessionId,
+                    });
+                })
+                .then(function(result) {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                });
+        });
+
+        function addPrefix(input) {
+            // Add your desired prefix, such as "$"
+            var prefix = "$";
+            // Remove any existing prefixes to avoid duplication
+            input.value = input.value.replace(prefix, '');
+            // Add the prefix to the input value
+            input.value = prefix + input.value;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('amount');
+            input.focus(); // Focus on the input field
+        });
+    </script>
 @endsection

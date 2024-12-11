@@ -24,7 +24,7 @@ class SquareController extends Controller
             return response()->json(['error' => 'Invalid tag'], 404);
         }
         $tag = $user->tag;
-        return view('web.checkouts.cashapp', compact('tag'));
+        return view('web.checkouts.square', compact('tag'));
     }
 
     public function getCahappPayment(Request $request, $tag){
