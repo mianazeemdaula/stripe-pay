@@ -38,9 +38,8 @@ class SquareController extends Controller
         $tag = $user->tag;
         $amount = $request->amount;
         // check if amount is int convert it to float
-        if (!is_float($amount)) {
-            $amount = (float) $amount;
-        }
+        $amount = number_format((float)$amount, 2, '.', '');
+        
         return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
     }
 

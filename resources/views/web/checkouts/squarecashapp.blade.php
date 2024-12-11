@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>Cash App Payment</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{{ asset('/css/square.css') }}" rel="stylesheet" />
     @if (env('APP_ENV') == 'production')
@@ -141,6 +142,7 @@
 
 <body>
     <form id="payment-form">
+        <img src="{{ asset('images/cashapp.png') }}" alt="cash app" srcset="" style="width:100px">
         <h1>Pay with Cash App</h1>
         <div id="loading-spinner" style="display:none;">Loading...</div>
         <div class=""> You are paying ${{ $amount }}</div>
