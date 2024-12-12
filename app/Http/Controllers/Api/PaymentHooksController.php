@@ -18,6 +18,10 @@ use Stripe\PaymentIntent;
 use Stripe\Transactions;
 use Stripe\Event;
 
+// Square
+use Square\Utils\WebhooksHelper;
+
+
 class PaymentHooksController extends Controller
 {
     
@@ -107,30 +111,28 @@ class PaymentHooksController extends Controller
     }
 
     function squareCashAppPayment(Request $request) {
-        Log::debug($request->all());
-        $signature = $request->header('x-square-signature');
-        $payload = $request->getContent();
+        Log::debug($request->headers->all());
+
+        // Get this funtion url 
+        $notificationUrl = $request->url();
+        $signatureKey = env('SQUARE_SIGNATURE_KEY');
+        $signature = $request->header('X-Square-HmacSha256-Signature');
+        $body = $request->getContent();
+
+        $isValid = WebhooksHelper::isValidWebhookEventSignature(
+            $body,
+            $signature,
+            $signatureKey,
+            $notificationUrl
+        );
 
         // Verify the webhook signature
-        if (!$this->verifySignature($signature, $payload)) {
-            Log::error('Invalid signature for Square webhook');
-            return response()->json(['message' => 'Invalid signature'], 400);
+        if (!$isValid) {
+            return response()->json(['message' => 'Invalid signature'], 403);
         }
-        $event = json_decode($payload, true);
-        switch ($event['type']) {
-            case 'payment.updated':
-                break;
-        }
-        Log::info('Square Webhook Event:', $event);
-        return response()->json(['message' => 'success'],500);
-    }
 
-    private function verifySquareSignature($signature, $payload)
-    {
-        $webhookSecret = env('SQUARE_WEBHOOK_SECRET');
-
-        $hash = base64_encode(hash_hmac('sha256', $payload, $webhookSecret, true));
-
-        return hash_equals($hash, $signature);
+        // Handle the event
+        $event = json_decode($body, true);
+        Log::debug($event);
     }
 }
