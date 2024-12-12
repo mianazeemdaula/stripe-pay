@@ -133,6 +133,6 @@ class PaymentHooksController extends Controller
 
         // Handle the event
         $event = json_decode($body, true);
-        Log::debug($event);
+        Log::info($event);
     }
 }
