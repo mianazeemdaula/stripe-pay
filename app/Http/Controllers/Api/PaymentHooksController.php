@@ -134,6 +134,29 @@ class PaymentHooksController extends Controller
         // Handle the event
         $event = json_decode($body, true);
         Log::info($event);
+        if($event['type'] == 'payment.updated') {
+            $data = $event['object']['payment'];
+            if($data['status'] == 'COMPLETED'){
+                $user = User::where('tag', $data['receipt_number'])->first();
+                if($user) {
+                    $amount = $data['approved_money']['amount'] / 100;
+                    $tax = (0.10 + ($amount * 0.26));
+                    $tax = number_format((float)$tax, 2, '.', '');
+                    $invoice = new Invoice;
+                    $invoice->status = 'paid';
+                    $invoice->amount = $amount ;
+                    $invoice->tax = $tax;
+                    $invoice->payment_gateway_id = 2;
+                    $invoice->tx_id = $data['id'];
+                    $invoice->user_id = $user->id;
+                    $invoice->save();
+                    $user->updateBalance($invoice->amount - $tax, "Payment received by cashApp");
+                }else{
+                    Log::info('User not found');
+                    return response()->json(['message' => 'User not found'], 404);
+                }
+            }
+        }
         return response()->json(['message' => 'In testing phase'], 403);
     }
 }
