@@ -130,9 +130,10 @@ class PaymentHooksController extends Controller
         if (!$isValid) {
             return response()->json(['message' => 'Invalid signature'], 403);
         }
-
+        
         // Handle the event
         $event = json_decode($body, true);
         Log::info($event);
+        return response()->json(['message' => 'In testing phase'], 403);
     }
 }
