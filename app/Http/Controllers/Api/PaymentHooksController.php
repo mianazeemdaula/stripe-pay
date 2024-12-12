@@ -116,7 +116,7 @@ class PaymentHooksController extends Controller
         // Get this funtion url 
         $notificationUrl = $request->url();
         $signatureKey = env('SQUARE_SIGNATURE_KEY');
-        $signature = $request->header('X-Square-HmacSha256-Signature');
+        $signature = $request->header('x-square-hmacsha256-signature');
         $body = $request->getContent();
 
         $isValid = WebhooksHelper::isValidWebhookEventSignature(
