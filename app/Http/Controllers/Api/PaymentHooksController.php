@@ -111,8 +111,6 @@ class PaymentHooksController extends Controller
     }
 
     function squareCashAppPayment(Request $request) {
-        Log::debug($request->headers->all());
-
         // Get this funtion url 
         $notificationUrl = $request->url();
         $signatureKey = env('SQUARE_SIGNATURE_KEY');
@@ -130,7 +128,6 @@ class PaymentHooksController extends Controller
         if (!$isValid) {
             return response()->json(['message' => 'Invalid signature'], 403);
         }
-        
         // Handle the event
         $event = json_decode($body, true);
         Log::info($event);
@@ -145,7 +142,7 @@ class PaymentHooksController extends Controller
                     $tax = number_format((float)$tax, 2, '.', '');
                     $invoice = new Invoice;
                     $invoice->status = 'paid';
-                    $invoice->amount = $amount ;
+                    $invoice->amount = $amount;
                     $invoice->tax = $tax;
                     $invoice->payment_gateway_id = 2;
                     $invoice->tx_id = $data['id'];
