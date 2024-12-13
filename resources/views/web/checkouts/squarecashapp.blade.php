@@ -5,10 +5,10 @@
     <title>Cash App Payment</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{{ asset('/css/square.css') }}" rel="stylesheet" />
-    @if (env('APP_ENV') == 'production')
-        <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
-    @else
+    @if (env('SQUARE_ENVIRONMENT') == 'sandbox')
         <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    @else
+        <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
     @endif
     <script>
         const appId = "{{ env('SQUARE_APPLICATION_ID') }}";
@@ -46,6 +46,7 @@
                 sourceId: token,
                 idempotencyKey: window.crypto.randomUUID(),
                 amount: '{{ $amount }}',
+                referenceId: "{{ $tag }}",
             });
 
             const paymentResponse = await fetch('/sqaure/cashapp', {
@@ -55,12 +56,10 @@
                 },
                 body,
             });
-            console.log(paymentResponse);
 
             if (paymentResponse.ok) {
                 return paymentResponse.json();
             }
-
             const errorBody = await paymentResponse.text();
             throw new Error(errorBody);
         }
@@ -77,7 +76,6 @@
                 statusContainer.classList.remove('is-success');
                 statusContainer.classList.add('is-failure');
             }
-
             statusContainer.style.visibility = 'visible';
         }
 
@@ -119,7 +117,6 @@
                         console.log("tokenResult", detail);
                         if (tokenResult.status === 'OK') {
                             const paymentResults = await createPayment(tokenResult.token);
-
                             displayPaymentResults('SUCCESS');
                             console.debug('Payment Success', paymentResults);
                         } else {
@@ -145,7 +142,7 @@
         <img src="{{ asset('images/cashapp.png') }}" alt="cash app" srcset="" style="width:100px">
         <h1>Pay with Cash App</h1>
         <div id="loading-spinner" style="display:none;">Loading...</div>
-        <div class=""> You are paying ${{ $amount }}</div>
+        <div class=""> You are paying ${{ $amount / 100 }}</div>
         <div id="cash-app-pay"></div>
         <div id="card-container"></div>
     </form>

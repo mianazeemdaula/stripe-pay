@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
 // Payment gateways routes
 Route::get('cashapp/{tag}', [SquareController::class, 'index']);
 Route::post('cashapp/{tag}', [SquareController::class, 'getCahappPayment'])->name('sqaurecashapp');
-Route::get('sqaure/cashapp', [SquareController::class, 'processCashAppPayment']);
+Route::any('sqaure/cashapp', [SquareController::class, 'processCashAppPayment']);
 
 
 Route::get('stripe/accounts', [StripeController::class, 'getAllAccounts']);
@@ -100,6 +100,9 @@ Route::get('/test', function(){
 });
 
 Route::get('/asldjaljsflasdj', function(){
+
+    return (new \App\Services\SquareService)->checkBalance();
+
     Stripe::setApiKey(env('STRIPE_SECRET'));
     // Stripe get events with sort to the latest date
     // $vents = \Stripe\Event::all(['limit' => 50, 'type' => 'payment_intent.cancelled']);

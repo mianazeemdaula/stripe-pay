@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Services\SquareService;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use Square\Models\Payment;
 
 class SquareController extends Controller
 {
@@ -36,70 +38,8 @@ class SquareController extends Controller
             return response()->json(['error' => 'Invalid tag'], 404);
         }
         $tag = $user->tag;
-        $amount = $request->amount;
-        // check if amount is int convert it to float
-        $amount = number_format((float)$amount, 2, '.', '');
-        
-        return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
-    }
-
-    public function createInvoice(Reqeust $request)
-    {
-        $request->validate([
-            'customer_id' => 'required',
-            'amount' => 'required|float',
-        ]);
-        $invoicesApi = $this->square->getInvoicesApi();
         $amount = $request->amount * 100;
-        // today 
-        $dueDate =  date('Y-m-d', strtotime(' + 1 day'));
-        $items = [
-            [
-                'name' => 'Service',
-                'quantity' => '1',
-                'base_price_money' => [
-                    'amount' => $amount,
-                    'currency' => 'USD',
-                ],
-            ],
-        ];
-        $invoice = [
-            'location_id' => env('SQUARE_LOCATION_ID'),
-            'customer_id' => $customerId,
-            'payment_requests' => [[
-                'request_type' => 'BALANCE',
-                'due_date' => $dueDate,
-            ]],
-            'line_items' => $items,
-        ];
-
-        try {
-            $response = $invoicesApi->createInvoice($invoice);
-            return $response->getResult()->getInvoice();
-        } catch (ApiException $e) {
-            throw new \Exception($e->getMessage());
-        }
-    }
-
-    public function processPayment($nonce, $amount)
-    {
-        $paymentsApi = $this->client->getPaymentsApi();
-
-        $payment = [
-            'source_id' => $nonce,
-            'amount_money' => [
-                'amount' => $amount,
-                'currency' => 'USD',
-            ],
-            'location_id' => config('services.square.location_id'),
-        ];
-
-        try {
-            $response = $paymentsApi->createPayment($payment);
-            return $response->getResult()->getPayment();
-        } catch (ApiException $e) {
-            throw new \Exception($e->getMessage());
-        }
+        return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
     }
 
     public function processCashAppPayment(Request $request)
@@ -108,6 +48,7 @@ class SquareController extends Controller
             'idempotencyKey' => 'required',
             'amount' => 'required',
             'sourceId' => 'required',
+            'referenceId' => 'required',
         ]);
 
         try {
@@ -115,8 +56,14 @@ class SquareController extends Controller
                 $request->sourceId,
                 $request->amount,
                 $request->idempotencyKey,
+                $request->referenceId,
             );
-            return response()->json(['payment' => $payment]);
+            Log::info('CashApp payment', $payment);
+            if($payment['status'] == 'success'){
+                // update user balance
+                return response()->json($payment, 200);
+            }
+            return response()->json($payment, 500);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

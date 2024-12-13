@@ -137,8 +137,9 @@ class PaymentHooksController extends Controller
         if($event['type'] == 'payment.updated') {
             $data = $event['object']['payment'];
             if($data['status'] == 'COMPLETED'){
-                $user = User::where('tag', $data['receipt_number'])->first();
-                if($user) {
+                $user = User::where('tag', $data['reference_id'])->first();
+                $invoice = Invoice::where('tx_id', $data['id'])->first();
+                if($user && !$invoice) {
                     $amount = $data['approved_money']['amount'] / 100;
                     $tax = (0.10 + ($amount * 0.26));
                     $tax = number_format((float)$tax, 2, '.', '');
@@ -151,6 +152,7 @@ class PaymentHooksController extends Controller
                     $invoice->user_id = $user->id;
                     $invoice->save();
                     $user->updateBalance($invoice->amount - $tax, "Payment received by cashApp");
+                    return response()->json(['message' => 'Payment received'], 200);
                 }else{
                     Log::info('User not found');
                     return response()->json(['message' => 'User not found'], 404);

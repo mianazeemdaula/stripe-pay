@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use Square\SquareClient;
+use Square\Models\CreatePaymentRequest;
+use Square\Models\Money;
 use Square\Exceptions\ApiException;
-
 class SquareService
 {
     private $client;
@@ -15,6 +16,27 @@ class SquareService
             'accessToken' => env('SQUARE_ACCESS_TOKEN'),
             'environment' => env('SQUARE_ENVIRONMENT'),
         ]);
+    }
+
+    public function checkBalance()
+    {
+        try {
+            $response = $this->client->getPaymentsApi()->listPayments();
+            if ($response->isSuccess()) {
+                $payments = $response->getResult()->getPayments();
+                return [
+                    'payments' => $payments,
+                ];
+                $total = array_reduce($payments, function ($carry, $payment) {
+                    return $carry + $payment->getAmountMoney()->getAmount();
+                }, 0);
+                return ['status' => 'success', 'balance' => $total];
+            } else {
+                return ['status' => 'error', 'message' => $response->getErrors()];
+            }
+        } catch (ApiException $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
     }
 
     public function createInvoice($customerId, $items, $dueDate)
@@ -60,23 +82,33 @@ class SquareService
         }
     }
 
-    public function processCashAppPayment($source, $amount, $imkey)
+    public function processCashAppPayment($source, $amount, $imkey, $referenceId)
     {
-        $paymentsApi = $this->client->getPaymentsApi();
+        
+        $payment  = new CreatePaymentRequest(
+            $imkey,
+            $amount,
+            'USD',
+        );
 
-        $payment = [
-            'sourceId' => $source,
-            'amount_money' => [
-                'amount' => $amount, 
-                'currency' => 'USD',
-            ],
-            'locationId' => env('SQUARE_LOCATION_ID'),
-            'idempotencyKey' => $imkey
-        ];
+        $amount_money = new \Square\Models\Money();
+        $amount_money->setAmount($amount);
+        $amount_money->setCurrency('USD');
 
+        $payment->setSourceId($source);
+        $payment->setAutocomplete(true);
+        $payment->setAmountMoney($amount_money);
+        $payment->setLocationId(env('SQUARE_LOCATION_ID'));
+        $payment->setReferenceId($referenceId);
         try {
-            $response = $paymentsApi->createPayment($payment);
-            return $response->getResult()->getPayment();
+            $response = $this->client->getPaymentsApi()->createPayment($payment);
+            if ($response->isSuccess()) {
+                $result = $response->getResult();
+                return ['status' => 'success', 'payment' => $result->getPayment()];
+            } else {
+                $errors = $response->getErrors();
+                return ['status' => 'error', 'message' => $errors];
+            }
         } catch (ApiException $e) {
             throw new \Exception($e->getMessage());
         }
