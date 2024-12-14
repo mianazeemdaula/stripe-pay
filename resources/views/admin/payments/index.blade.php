@@ -8,7 +8,6 @@
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
             <h2 class="text-white">Payments</h2>
-            <div class="text-white">USD {{ auth()->user()->transaction->balance ?? '0' }}</div>
             {{-- <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a> --}}
         </div>
         <div class="px-4 pb-2">
@@ -21,7 +20,7 @@
                                 ID</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Note</th>
+                                User</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Status</th>
@@ -54,6 +53,7 @@
                                     {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $item->user->name }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->status }}

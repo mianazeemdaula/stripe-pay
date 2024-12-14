@@ -12,6 +12,6 @@ class StripPayoutController extends Controller
     public function index() {
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $payouts = Payout::all();
-        return view('admin.payouts.index', compact('payouts'));
+        return view('admin.stripe.payouts', compact('payouts'));
     }
 }

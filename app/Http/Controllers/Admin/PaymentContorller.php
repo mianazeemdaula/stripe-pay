@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Invoice;
-
-class InvoiceController extends Controller
+class PaymentContorller extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $collection = Invoice::where('user_id', auth()->user()->id)->latest()->paginate();
-        return view('user.invoice.index', compact('collection'));
+        $collection = Invoice::with(['user'])->latest()->paginate();
+        return view('admin.payments.index', compact('collection'));
     }
 
     /**
@@ -23,8 +21,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $products = \App\Models\Product::where('user_id', auth()->user()->id)->get();
-        return view('user.invoice.create', compact('products'));
+        //
     }
 
     /**
@@ -32,16 +29,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required',
-        ]);
-        $invoice = new Invoice();
-        $invoice->invoice_id = \Illuminate\Support\Str::random(10);
-        $invoice->user_id = auth()->user()->id;
-        $invoice->payment_gateway_id = 1;
-        $invoice->product_id = $request->product_id;
-        $invoice->save();
-        return redirect()->route('user.invoices.index')->with('success', 'Invoice created successfully.');
+        //
     }
 
     /**

@@ -67,6 +67,10 @@
                         <i class="bi-people-fill"></i>
                         <a href="{{ route('admin.users.index') }}">Users</a>
                     </li>
+                    <li @if ($page == 'payments') class="active" @endif>
+                        <i class="bi-cash"></i>
+                        <a href="{{ route('admin.payments.index') }}">Payments</a>
+                    </li>
                     <li @if ($page == 'withdrawals') class="active" @endif>
                         <i class="bi-currency-exchange"></i>
                         <a href="{{ route('admin.withdrawals.index') }}">Withdrawals</a>
@@ -74,6 +78,10 @@
                     <li @if ($page == 'payouts') class="active" @endif>
                         <i class="bi-bank"></i>
                         <a href="{{ route('admin.payouts.index') }}">Stripe Payouts</a>
+                    </li>
+                    <li @if ($page == 'square') class="active" @endif>
+                        <i class="bi-bank"></i>
+                        <a href="{{ route('admin.square.index') }}">Sqaure Payments</a>
                     </li>
                 @endrole
                 @role('merchant')

@@ -38,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('users',\App\Http\Controllers\Admin\UserController::class);
         Route::resource('withdrawals',\App\Http\Controllers\Admin\WithdrawalController::class);
         Route::resource('payouts',\App\Http\Controllers\Admin\StripPayoutController::class);
+        Route::resource('payments',\App\Http\Controllers\Admin\PaymentContorller::class);
+        Route::resource('square',\App\Http\Controllers\Admin\SquarePayoutController::class);
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
@@ -101,7 +103,7 @@ Route::get('/test', function(){
 
 Route::get('/asldjaljsflasdj', function(){
 
-    return (new \App\Services\SquareService)->checkBalance();
+    return (new \App\Services\SquareService)->payments();
 
     Stripe::setApiKey(env('STRIPE_SECRET'));
     // Stripe get events with sort to the latest date

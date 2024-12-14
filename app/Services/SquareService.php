@@ -18,19 +18,13 @@ class SquareService
         ]);
     }
 
-    public function checkBalance()
+    public function payments()
     {
         try {
             $response = $this->client->getPaymentsApi()->listPayments();
             if ($response->isSuccess()) {
                 $payments = $response->getResult()->getPayments();
-                return [
-                    'payments' => $payments,
-                ];
-                $total = array_reduce($payments, function ($carry, $payment) {
-                    return $carry + $payment->getAmountMoney()->getAmount();
-                }, 0);
-                return ['status' => 'success', 'balance' => $total];
+                return $payments;
             } else {
                 return ['status' => 'error', 'message' => $response->getErrors()];
             }
