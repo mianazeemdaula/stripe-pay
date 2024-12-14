@@ -47,7 +47,9 @@
                                     ${{ $item['approved_money']['amount'] }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item['processing_fee'][0]['amount_money']['amount'] }}
+                                    @if ($item['status'] == 'COMPLETED')
+                                        {{ $item['processing_fee'][0]['amount_money']['amount'] }}
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ \App\Models\User::where('tag', $item['reference_id'])->first()->name ?? 'N/A' }}
