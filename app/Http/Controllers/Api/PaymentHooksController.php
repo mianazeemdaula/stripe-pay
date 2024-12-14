@@ -132,15 +132,13 @@ class PaymentHooksController extends Controller
         $event = json_decode($body, true);
         Log::info($event);
         if($event['type'] == 'payment.updated') {
-            $data = $event['object']['payment'];
+            $data = $event['data']['object']['payment'];
             if($data['status'] == 'COMPLETED'){
                 $user = User::where('tag', $data['reference_id'])->first();
                 $invoice = Invoice::where('tx_id', $data['id'])->first();
                 if($user && !$invoice) {
                     $amount = $data['approved_money']['amount'] / 100;
-                    $tax = (0.10 + ($amount * 0.26));
-                    $tax = number_format((float)$tax, 2, '.', '');
-                    $invoice = new Invoice;
+                    $tax = ($data['processing_fee'][0]['amount_money']['amount']) / 100;
                     $invoice->status = 'paid';
                     $invoice->amount = $amount;
                     $invoice->tax = $tax;
@@ -156,6 +154,6 @@ class PaymentHooksController extends Controller
                 }
             }
         }
-        return response()->json(['message' => 'In testing phase'], 403);
+        return response()->json(['message' => 'Done successfully']);
     }
 }
