@@ -137,6 +137,7 @@ class PaymentHooksController extends Controller
                 $user = User::where('tag', $data['reference_id'])->first();
                 $invoice = Invoice::where('tx_id', $data['id'])->first();
                 if($user && !$invoice) {
+                    $invoice = new Invoice;
                     $amount = $data['approved_money']['amount'] / 100;
                     $tax = ($data['processing_fee'][0]['amount_money']['amount']) / 100;
                     $invoice->status = 'paid';
