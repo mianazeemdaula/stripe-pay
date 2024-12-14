@@ -44,11 +44,15 @@
                                     {{ $item['status'] }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    ${{ $item['approved_money']['amount'] }}
+                                    @if ($item['status'] == 'COMPLETED')
+                                        {{ $item['approved_money']['amount'] / 100 }}
+                                    @else
+                                        ${{ $item['amount_money']['amount'] / 100 }}
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     @if ($item['status'] == 'COMPLETED')
-                                        {{ $item['processing_fee'][0]['amount_money']['amount'] }}
+                                        {{ $item['processing_fee'][0]['amount_money']['amount'] / 100 }}
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
