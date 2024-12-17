@@ -142,7 +142,7 @@
         <img src="{{ asset('images/cashapp.png') }}" alt="cash app" srcset="" style="width:100px">
         <h1>Pay with Cash App</h1>
         <div id="loading-spinner" style="display:none;">Loading...</div>
-        <div class=""> You are paying ${{ $amount / 100 }}</div>
+        <div class=""> You are paying ${{ $amount }}</div>
         <div id="cash-app-pay"></div>
         <div id="card-container"></div>
     </form>

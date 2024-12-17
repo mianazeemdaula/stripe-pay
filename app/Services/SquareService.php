@@ -78,7 +78,7 @@ class SquareService
 
     public function processCashAppPayment($source, $amount, $imkey, $referenceId)
     {
-        
+        $amount = $amount * 100;
         $payment  = new CreatePaymentRequest(
             $imkey,
             $amount,

@@ -38,7 +38,7 @@ class SquareController extends Controller
             return response()->json(['error' => 'Invalid tag'], 404);
         }
         $tag = $user->tag;
-        $amount = $request->amount * 100;
+        $amount = $request->amount;
         return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
     }
 
