@@ -78,18 +78,12 @@ class SquareService
 
     public function processCashAppPayment($source, $amount, $imkey, $referenceId)
     {
-        // $amount = $amount * 100;
-        $payment  = new CreatePaymentRequest(
-            $imkey,
-            $amount,
-            'USD',
-        );
-
+        $payment  = new CreatePaymentRequest($source,$imke);
+        $amount = (int)($amount * 100);
         $amount_money = new \Square\Models\Money();
         $amount_money->setAmount($amount);
         $amount_money->setCurrency('USD');
-
-        $payment->setSourceId($source);
+        
         $payment->setAutocomplete(true);
         $payment->setAmountMoney($amount_money);
         $payment->setLocationId(env('SQUARE_LOCATION_ID'));

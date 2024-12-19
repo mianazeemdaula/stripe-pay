@@ -19,7 +19,7 @@
                 countryCode: 'US',
                 currencyCode: 'USD',
                 total: {
-                    amount: '{{ $amount * 100 }}',
+                    amount: '{{ $amount }}',
                     label: 'Total',
                 },
             });
@@ -45,7 +45,7 @@
                 locationId,
                 sourceId: token,
                 idempotencyKey: window.crypto.randomUUID(),
-                amount: '{{ $amount * 100 }}',
+                amount: '{{ $amount }}',
                 referenceId: "{{ $tag }}",
             });
 
