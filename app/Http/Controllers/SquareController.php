@@ -38,7 +38,10 @@ class SquareController extends Controller
             return response()->json(['error' => 'Invalid tag'], 404);
         }
         $tag = $user->tag;
-        $amount = $request->amount;
+        // convert amount to float with 2 decimal places
+        $amount = number_format((float)$request->amount, 2, '.', '');
+        // convert to string
+        $amount = (string)$amount;
         return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
     }
 
