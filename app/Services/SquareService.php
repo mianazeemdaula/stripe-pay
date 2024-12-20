@@ -6,6 +6,8 @@ use Square\SquareClient;
 use Square\Models\CreatePaymentRequest;
 use Square\Models\Money;
 use Square\Exceptions\ApiException;
+use Illuminate\Support\Facades\Log;
+
 class SquareService
 {
     private $client;
@@ -80,6 +82,7 @@ class SquareService
     {
         $payment  = new CreatePaymentRequest($source,$imke);
         $amount = (int)($amount * 100);
+        Log::info('Amount on processCashAppPayment: '.$amount);
         $amount_money = new \Square\Models\Money();
         $amount_money->setAmount($amount);
         $amount_money->setCurrency('USD');

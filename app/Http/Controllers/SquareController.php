@@ -42,6 +42,7 @@ class SquareController extends Controller
         $amount = number_format((float)$request->amount, 2, '.', '');
         // convert to string
         $amount = (string)$amount;
+        Log::info('Amount on getCahappPayment: '.$amount);
         return view('web.checkouts.squarecashapp', compact('tag', 'amount'));
     }
 
