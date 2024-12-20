@@ -135,8 +135,12 @@ class PaymentHooksController extends Controller
             $data = $event['data']['object']['payment'];
             if($data['status'] == 'COMPLETED'){
                 $user = User::where('tag', $data['reference_id'])->first();
+                if(!$user){
+                    Log::info('User not found');
+                    return response()->json(['message' => 'User not found'], 404);
+                }
                 $invoice = Invoice::where('tx_id', $data['id'])->first();
-                if($user && !$invoice) {
+                if(!$invoice) {
                     $invoice = new Invoice;
                     $amount = $data['approved_money']['amount'] / 100;
                     $tax = ($data['processing_fee'][0]['amount_money']['amount']) / 100;
@@ -150,8 +154,8 @@ class PaymentHooksController extends Controller
                     $user->updateBalance($invoice->amount - $tax, "Payment received by cashApp");
                     return response()->json(['message' => 'Payment received'], 200);
                 }else{
-                    Log::info('User not found');
-                    return response()->json(['message' => 'User not found'], 404);
+                    Log::info('Invoice already exists');
+                    return response()->json(['message' => "Invoice already exits"] , 200);
                 }
             }
         }
