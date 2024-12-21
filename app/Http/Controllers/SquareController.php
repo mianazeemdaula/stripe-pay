@@ -56,22 +56,22 @@ class SquareController extends Controller
         ]);
 
         try {
-            Log::info('Square processCashAppPayment before:', $request->all());
+            // Log::info('Square processCashAppPayment before:', $request->all());
             $payment = $this->square->processCashAppPayment(
                 $request->sourceId,
                 $request->amount,
                 $request->idempotencyKey,
                 $request->referenceId,
             );
-            Log::info('Square processCashAppPayment after:', $payment);
+            // Log::info('Square processCashAppPayment after:', $payment);
             if($payment['status'] == 'success'){
                 // update user balance
                 return response()->json($payment, 200);
             }
-            Log::error('Square processCashAppPayment error:', $payment);
+            // Log::error('Square processCashAppPayment error:', $payment);
             return response()->json($payment, 500);
         } catch (\Exception $e) {
-            Log::error('Square processCashAppPayment exception:', $e->getMessage());
+            // Log::error('Square processCashAppPayment exception:', $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
