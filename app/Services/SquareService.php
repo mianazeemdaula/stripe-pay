@@ -83,11 +83,9 @@ class SquareService
         $payment  = new CreatePaymentRequest($source,$imke);
         $amount = (float)$amount;
         $amount = (int)($amount * 100);
-        Log::info('Amount on processCashAppPayment: '.$amount);
         $amount_money = new \Square\Models\Money();
         $amount_money->setAmount($amount);
         $amount_money->setCurrency('USD');
-        
         $payment->setAutocomplete(true);
         $payment->setAmountMoney($amount_money);
         $payment->setLocationId(env('SQUARE_LOCATION_ID'));

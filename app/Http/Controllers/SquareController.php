@@ -63,14 +63,15 @@ class SquareController extends Controller
                 $request->idempotencyKey,
                 $request->referenceId,
             );
-            Log::info('Square processCashAppPayment after:', json_encode($payment));
+            Log::info('Square processCashAppPayment after:', $payment);
             if($payment['status'] == 'success'){
                 // update user balance
                 return response()->json($payment, 200);
             }
+            Log::error('Square processCashAppPayment error:', $payment);
             return response()->json($payment, 500);
         } catch (\Exception $e) {
-            Log::info('Square processCashAppPayment exception:', $e->getMessage());
+            Log::error('Square processCashAppPayment exception:', $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
