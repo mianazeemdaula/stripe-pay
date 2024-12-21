@@ -70,6 +70,7 @@ class SquareController extends Controller
             }
             return response()->json($payment, 500);
         } catch (\Exception $e) {
+            Log::info('Square processCashAppPayment exception:', $e);
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
