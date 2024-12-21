@@ -80,7 +80,7 @@ class SquareService
 
     public function processCashAppPayment($source, $amount, $imkey, $referenceId)
     {
-        $payment  = new CreatePaymentRequest($source,$imke);
+        $payment  = new CreatePaymentRequest($source,$imkey);
         // $amount = (float)$amount;
         $amount = (int)($amount);
         $amount_money = new \Square\Models\Money();
