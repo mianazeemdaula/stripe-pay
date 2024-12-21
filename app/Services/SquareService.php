@@ -82,7 +82,7 @@ class SquareService
     {
         $payment  = new CreatePaymentRequest($source,$imkey);
         // $amount = (float)$amount;
-        $amount = (int)($amount);
+        $amount = ((int)($amount) ) * 100;
         $amount_money = new \Square\Models\Money();
         $amount_money->setAmount($amount);
         $amount_money->setCurrency('USD');
