@@ -56,13 +56,14 @@ class SquareController extends Controller
         ]);
 
         try {
+            Log::info('Square processCashAppPayment before:', $request->all());
             $payment = $this->square->processCashAppPayment(
                 $request->sourceId,
                 $request->amount,
                 $request->idempotencyKey,
                 $request->referenceId,
             );
-            Log::info('CashApp payment', $payment);
+            Log::info('Square processCashAppPayment after:', $payment);
             if($payment['status'] == 'success'){
                 // update user balance
                 return response()->json($payment, 200);
