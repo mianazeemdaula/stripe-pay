@@ -81,6 +81,7 @@ class SquareService
     public function processCashAppPayment($source, $amount, $imkey, $referenceId)
     {
         $payment  = new CreatePaymentRequest($source,$imke);
+        $amount = (float)$amount;
         $amount = (int)($amount * 100);
         Log::info('Amount on processCashAppPayment: '.$amount);
         $amount_money = new \Square\Models\Money();
@@ -101,7 +102,7 @@ class SquareService
                 return ['status' => 'error', 'message' => $errors];
             }
         } catch (ApiException $e) {
-            throw new \Exception($e->getMessage());
+            return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
 }
