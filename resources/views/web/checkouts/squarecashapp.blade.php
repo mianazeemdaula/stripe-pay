@@ -57,6 +57,11 @@
                 body,
             });
 
+            if (paymentResponse.status !== 200) {
+                const errorBody = await paymentResponse.text();
+                throw new Error(errorBody);
+            }
+
             if (paymentResponse.ok) {
                 return paymentResponse.json();
             }
