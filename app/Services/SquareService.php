@@ -102,7 +102,7 @@ class SquareService
                 return ['status' => 'error', 'message' => $errors];
             }
         } catch (ApiException $e) {
-            return ['status' => 'error', 'message' => $e->getMessage()];
+            throw new \Exception($e->getMessage());
         }
     }
 }
