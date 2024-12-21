@@ -126,3 +126,13 @@ Route::get('/asldjaljsflasdj', function(){
     ];
 });
 
+
+Route::get('app/logs', function(){
+    $filePath = storage_path("logs/laravel.log");
+    if (\File::exists($filePath)) {
+        return response()->file($filePath, [
+            'Content-Type' => 'text/plain',
+        ]);
+    }
+    return response()->json(['error' => 'Log file not found'], 404);
+});
