@@ -140,14 +140,10 @@ class PaymentHooksController extends Controller
                     return response()->json(['message' => 'User not found'], 404);
                 }
                 $invoice = Invoice::where('tx_id', $data['id'])->first();
-                if(!$invoice) {
+                if(!$invoice && isset($data['processing_fee'])) {
                     $invoice = new Invoice;
                     $amount = $data['approved_money']['amount'] / 100;
-                    if(isset($data['processing_fee'][0]['amount_money']['amount'])){
-                        $tax = ($data['processing_fee'][0]['amount_money']['amount']) / 100;
-                    }else{
-                        $tax = 0;
-                    }
+                    $tax = ($data['processing_fee'][0]['amount_money']['amount']) / 100;
                     $invoice->status = 'paid';
                     $invoice->amount = $amount;
                     $invoice->tax = $tax;

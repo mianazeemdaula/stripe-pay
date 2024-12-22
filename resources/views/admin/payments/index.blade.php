@@ -27,7 +27,6 @@
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Amount Paid</th>
-
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Tax
@@ -45,18 +44,26 @@
                         @foreach ($collection as $item)
                             <tr class="border-b-2">
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                                    @if ($item->payment_gateway_id == 1)
-                                        <span class="bi bi-stripe text-blue-600"></span>
-                                    @else
-                                        <span class="bi bi-dash-square"></span>
-                                    @endif
+                                    <span class="{{ $item->gateway->logo }}"></span>
                                     {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                     {{ $item->user->name }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $item->status }}
+                                    <div class="flex items-center space-x-2">
+                                        <div> {{ $item->status }}</div>
+                                        @if ($item->status == 'pending')
+                                            <form action="{{ route('admin.payments.update', $item->id) }}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <input type="text" name="status" value="paid" hidden>
+                                                <button type="submit" class="text-blue-500">
+                                                    <span class="bi bi-check-circle-fill"></span>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                     ${{ $item->amount }}

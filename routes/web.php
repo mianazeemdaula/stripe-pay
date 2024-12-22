@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::resource('products',\App\Http\Controllers\User\ProductController::class);
         Route::resource('invoices',\App\Http\Controllers\User\InvoiceController::class);
+        Route::resource('payments',\App\Http\Controllers\User\PaymentController::class);
         Route::resource('withdrawals',\App\Http\Controllers\User\WithdrawalController::class);
     });
 });

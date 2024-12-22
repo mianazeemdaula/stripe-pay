@@ -24,4 +24,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function gateway(): BelongsTo
+    {
+        return $this->belongsTo(PaymentGateway::class, 'payment_gateway_id');
+    }
 }

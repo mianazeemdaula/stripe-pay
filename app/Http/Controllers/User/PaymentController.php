@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\PaymentGateway;
 use App\Models\Invoice;
-class PaymentContorller extends Controller
+
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $collection = Invoice::with(['user'])->latest()->paginate();
-        return view('admin.payments.index', compact('collection'));
+        
     }
 
     /**
@@ -21,7 +22,8 @@ class PaymentContorller extends Controller
      */
     public function create()
     {
-        //
+        $gateways = PaymentGateway::all();
+        return view('user.payments.create', compact('gateways'));
     }
 
     /**
@@ -29,7 +31,19 @@ class PaymentContorller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'gateway' => 'required',
+            'amount' => 'required|numeric',
+        ]);
+
+        $invoice = new Invoice();
+        $invoice->user_id = auth()->id();
+        $invoice->payment_gateway_id = $request->gateway;
+        $invoice->amount = $request->amount;
+        $invoice->tax = 0;
+        $invoice->tx_id = 'TXN_'.rand(100000,999999);
+        $invoice->save();
+        return redirect()->route('user.invoices.index')->with('success', 'Payment has been made successfully.');
     }
 
     /**
@@ -53,17 +67,7 @@ class PaymentContorller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'status' => 'required|in:paid,unpaid'
-        ]);
-        $invoice = Invoice::find($id);
-        if($invoice && $invoice->status !== 'paid'){
-            $invoice->status = $request->status;
-            $invoice->save();
-            $tax = $invoice->tax;
-            $invoice->user->updateBalance($invoice->amount - $tax, "Payment received by ".$invoice->gateway->name);
-            return redirect()->back()->with('success', 'Invoice status has been updated successfully.');
-        }
+        //
     }
 
     /**

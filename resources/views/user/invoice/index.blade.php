@@ -1,9 +1,14 @@
 @extends('layouts.admin')
 
 @section('body')
-    <div class="flex space-x-2 items-center">
-        <span class="bi bi-gear text-2xl"></span>
-        <h2 class="text-xl">Payments</h2>
+    <div class="flex space-x-2 items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <span class="bi bi-gear text-2xl"></span>
+            <h2 class="text-xl">Payments</h2>
+        </div>
+        <div>
+            <a href="{{ route('user.payments.create') }}" class="p-2 bg-green-500 text-white rounded-md">Add Payment</a>
+        </div>
     </div>
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
@@ -46,11 +51,7 @@
                         @foreach ($collection as $item)
                             <tr class="border-b-2">
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                                    @if ($item->payment_gateway_id == 1)
-                                        <span class="bi bi-stripe text-blue-600"></span>
-                                    @else
-                                        <span class="bi bi-dash-square"></span>
-                                    @endif
+                                    <span class="{{ $item->gateway->logo }}"></span>
                                     {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">

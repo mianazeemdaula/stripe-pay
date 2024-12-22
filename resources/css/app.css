@@ -1,9 +1,9 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-
     .amountinput::-webkit-inner-spin-button,
     .amountinput::-webkit-outer-spin-button {
         -webkit-appearance: none;
