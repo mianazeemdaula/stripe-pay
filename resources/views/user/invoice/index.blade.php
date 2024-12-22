@@ -52,7 +52,7 @@
                             <tr class="border-b-2">
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                     <span class="{{ $item->gateway->logo }}">
-                                        @if (!$item->gateways->logo)
+                                        @if (!$item->gateway->logo)
                                             {{ $item->gateway->name }}
                                         @endif
                                     </span>
