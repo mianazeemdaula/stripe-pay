@@ -51,7 +51,11 @@
                         @foreach ($collection as $item)
                             <tr class="border-b-2">
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                                    <span class="{{ $item->gateway->logo }}"></span>
+                                    <span class="{{ $item->gateway->logo }}">
+                                        @if (!$item->gateways->logo)
+                                            {{ $item->gateway->name }}
+                                        @endif
+                                    </span>
                                     {{ $item->id }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
