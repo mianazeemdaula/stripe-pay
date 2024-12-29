@@ -29,7 +29,7 @@
         async function initializeCashApp(payments) {
             const paymentRequest = buildPaymentRequest(payments);
             const cashAppPay = await payments.cashAppPay(paymentRequest, {
-                redirectURL: "{{ url('invoice-success', $tag) }}",
+                redirectURL: "{{ url('invoice-cancel', $tag) }}",
                 referenceId: "{{ $tag }}",
             });
             const buttonOptions = {
