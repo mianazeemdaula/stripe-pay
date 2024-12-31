@@ -14,7 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $collection = Invoice::where('user_id', auth()->user()->id)->latest()->paginate();
+        $collection = Invoice::where('user_id', auth()->user()->id)->orderBy('id','desc')->paginate();
         return view('user.invoice.index', compact('collection'));
     }
 
