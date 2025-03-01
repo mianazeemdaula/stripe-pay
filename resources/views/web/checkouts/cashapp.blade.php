@@ -4,7 +4,7 @@
         <form id="amountForm" class="p-4 items-center justify-between flex flex-col">
             {{-- <img src="{{ asset('/images/logo.jpg') }}" alt="" class="w-32 rounded-full"> --}}
             <div class="text-white font-semibold text-sm md:text-lg mb-8 text-center">
-                Enter the amount, hit pay, then choose CashApp pay to deposit. Thanks!
+                Enter the amount, hit pay, then choose your pay method. Thanks!
             </div>
             <div class="mb-12 flex flex-col items-center justify-between">
                 <div class="input-container">
