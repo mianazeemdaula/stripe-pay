@@ -25,7 +25,7 @@ class BillingController extends Controller
       $user = User::where('tag', $request->tag)->firstOrFail();
       $randProduct = "Invoice #" . Str::random(5) . " - " . $request->amount . " USD";
       $session = Session::create([
-        'payment_method_types' => ['cashapp', 'card'],
+        // 'payment_method_types' => ['cashapp', 'card'],
         // 'payment_method_types' => ['card'],
         'success_url' => url("/invoice-success/$request->tag"),
         'cancel_url' => url("/invoice-cancel/$request->tag"),
