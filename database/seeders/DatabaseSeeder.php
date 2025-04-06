@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
         $user->assignRole('admin');
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Mohsin',
-            'email' => 'datascience@mail.com',
-            'password' => bcrypt('@#12345mohsin'),
+            'name' => 'Wakeel Ahmad',
+            'email' => 'wakeel@mail.com',
+            'password' => bcrypt('@#wakeel'),
             'tag' => Str::random(10),
         ]);
         $user->assignRole('merchant');
@@ -52,26 +52,6 @@ class DatabaseSeeder extends Seeder
                 'client_secret' => 'client_secret',
                 'mode' => 'sandbox',
             ],
-        ]);
-
-        foreach (['Game Points 1', 'Game Points v2', 'Game Points v3'] as  $value) {
-            \App\Models\Product::create([
-                'name' => $value,
-                'user_id' => 2,
-                'description' => 'Game Points',
-                'price' => 10,
-                'discount' => 0,
-                'tax' => 0.5,
-            ]);
-        }
-
-        \App\Models\Invoice::create([
-            'user_id' => 2,
-            'payment_gateway_id' => 1,
-            'tx_id' => Str::random(10),
-            'amount' => 10,
-            'tax' => 0.5,
-            'status' => 'paid',
         ]);
     }
 }
