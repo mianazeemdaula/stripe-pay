@@ -45,12 +45,12 @@ class PaymentHooksController extends Controller
                         $invoice = new Invoice;
                         $invoice->status = 'paid';
                         $invoice->amount = ($amount / 100);
-                        $invoice->tax = $tax;
+                        $invoice->tax = 0;
                         $invoice->payment_gateway_id = 1;
                         $invoice->tx_id = $event->id;
                         $invoice->user_id = $user->id;
                         $invoice->save();
-                        $user->updateBalance($invoice->amount - $tax, "Payment received by cashApp");
+                        $user->updateBalance($invoice->amount, "Payment received by cashApp");
                     }
                     DB::commit();
                 }
