@@ -35,7 +35,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'email|required|unique:users',
             'password' => 'required|string|min:8',
-            'role' => 'required|in:admin,merchant'
+            'role' => 'required|in:admin,merchant,manager',
         ]);
         $user = new User();
         $user->name = $request->name;
@@ -73,7 +73,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'email|required|unique:users,email,'.$id,
             'password' => 'nullable|string|min:8',
-            'role' => 'required|in:admin,merchant',
+            'role' => 'required|in:admin,merchant,manager',
             'fee' => 'required|numeric|min:0|max:100',
         ]);
         $user = User::findOrFail($id);
