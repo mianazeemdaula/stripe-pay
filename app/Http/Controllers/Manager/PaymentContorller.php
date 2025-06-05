@@ -13,7 +13,7 @@ class PaymentContorller extends Controller
     public function index()
     {
         $collection = Invoice::with(['user'])->orderBy('id','desc')->paginate();
-        return view('admin.manager.index', compact('collection'));
+        return view('manager.payments.index', compact('collection'));
     }
 
     /**

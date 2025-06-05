@@ -16,7 +16,7 @@ class WithdrawalController extends Controller
     public function index()
     {
         $collection = Withdrawal::orderBy('id', 'desc')->paginate();
-        return view('admin.withdrawals.index', compact('collection'));
+        return view('manager.withdrawals.index', compact('collection'));
     }
 
     /**
@@ -26,7 +26,7 @@ class WithdrawalController extends Controller
     {
         $users = User::role('merchant')
         ->whereHas('transaction')->get();
-        return view('admin.withdrawals.create', compact('users'));
+        return view('manager.withdrawals.create', compact('users'));
     }
 
     /**
@@ -52,7 +52,7 @@ class WithdrawalController extends Controller
             'status' => 'approved',
         ]);
         $user->updateBalance(-$request->amount, 'Withdrawal successfully.');
-        return redirect()->route('admin.users.index')->with('success', 'Withdrawal successfully.');
+        return redirect()->route('manager.withdrawals.index')->with('success', 'Withdrawal successfully.');
     }
 
     /**
