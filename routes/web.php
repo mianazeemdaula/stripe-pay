@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('square',\App\Http\Controllers\Admin\SquarePayoutController::class);
     });
 
-    Route::group(['prefix' => 'manager', 'as' => 'manager.', 'middleware' => ['role:user'] ], function () {
+    Route::group(['prefix' => 'manager', 'as' => 'manager.', 'middleware' => ['role:manager'] ], function () {
         Route::resource('withdrawals',\App\Http\Controllers\Manager\WithdrawalController::class);
         Route::resource('payments',\App\Http\Controllers\Manager\PaymentContorller::class);
     });

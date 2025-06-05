@@ -71,7 +71,7 @@
                                 <select name="role" id="role" class="border border-gray-300 p-2 rounded-lg">
                                     <option value="admin">Admin</option>
                                     <option value="merchant">Merchant</option>
-                                    <option value="user">User</option>
+                                    <option value="manager">Manager</option>
                                 </select>
                                 @error('role')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>

@@ -85,7 +85,7 @@
                     </li>
                 @endrole
 
-                @role('user')
+                @role('manager')
                     <li @if ($page == 'payments') class="active" @endif>
                         <i class="bi-cash"></i>
                         <a href="{{ route('manager.payments.index') }}">Payments</a>
