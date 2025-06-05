@@ -37,36 +37,15 @@
                 <div class="p-6 rounded-lg  bg-white">
                     <div class="h2">Withdrawal</div>
                     <div class="text-slate-500 mt-1">Please provide following information</div>
-                    <form action="{{ route('admin.withdrawals.store') }}" method='post' class="flex flex-col w-full mt-4"
+                    <form action="{{ route('manager.withdrawals.store') }}" method='post' class="flex flex-col w-full mt-4"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-1 lg:grid-cols-2 mt-3 text-slate-600 gap-4">
-                            <div class="flex flex-col">
-                                <label for="">Marchent</label>
-                                <select name="user_id" id="user_id" class="border border-gray-300 p-2 rounded-lg">
-                                    @foreach ($users as $item)
-                                        <option data-amount="{{ $item->transaction->balance }}" value="{{ $item->id }}"
-                                            data-fee="{{ $item->fee }}">
-                                            {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('user_id')
-                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                                @enderror
-                            </div>
                             <div class="flex flex-col">
                                 <label for="">Amount*</label>
                                 <input type="text" id="amount" name="amount" value="{{ old('amount') }}"
                                     class="border border-gray-300 p-2 rounded-lg" placeholder="Enter Amount">
                                 @error('amount')
-                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="flex flex-col">
-                                <label for="">Fee %</label>
-                                <input type="text" id="fee" name="fee" value="{{ old('fee') }}"
-                                    class="border border-gray-300 p-2 rounded-lg" placeholder="Enter Fee">
-                                @error('fee')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
