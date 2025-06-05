@@ -98,7 +98,7 @@ class PaymentHooksController extends Controller
         $payments = \Stripe\PaymentIntent::search([
             'limit' => 10,
             // 'status' => 'succeeded',
-            'query' => "metadata['customer_id']:'2'",
+            // 'query' => "metadata['customer_id']:'2'",
         ]);
 
         // $payments = \Stripe\Transactions::all([

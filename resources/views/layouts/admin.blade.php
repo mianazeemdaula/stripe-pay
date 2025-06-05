@@ -84,6 +84,17 @@
                         <a href="{{ route('admin.square.index') }}">Sqaure Payments</a>
                     </li>
                 @endrole
+
+                @role('user')
+                    <li @if ($page == 'payments') class="active" @endif>
+                        <i class="bi-cash"></i>
+                        <a href="{{ route('manager.payments.index') }}">Payments</a>
+                    </li>
+                    <li @if ($page == 'withdrawals') class="active" @endif>
+                        <i class="bi-currency-exchange"></i>
+                        <a href="{{ route('manager.withdrawals.index') }}">Withdrawals</a>
+                    </li>
+                @endrole
                 @role('merchant')
                     <li @if ($page == 'invoices') class="active" @endif>
                         <i class="bi-receipt"></i>
