@@ -90,10 +90,10 @@
                         <i class="bi-cash"></i>
                         <a href="{{ route('manager.payments.index') }}">Payments</a>
                     </li>
-                    <li @if ($page == 'withdrawals') class="active" @endif>
+                    {{-- <li @if ($page == 'withdrawals') class="active" @endif>
                         <i class="bi-currency-exchange"></i>
                         <a href="{{ route('manager.withdrawals.index') }}">Withdrawals</a>
-                    </li>
+                    </li> --}}
                 @endrole
                 @role('merchant')
                     <li @if ($page == 'invoices') class="active" @endif>
