@@ -26,10 +26,6 @@
                                 Amount Paid</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Tax
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Received
                             </th>
                             <th scope="col"
@@ -65,10 +61,6 @@
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                     ${{ $item->amount }}
-                                </td>
-
-                                <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                                    ${{ $item->tax }}
                                 </td>
                                 <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
                                     ${{ $item->amount - $item->tax }}
