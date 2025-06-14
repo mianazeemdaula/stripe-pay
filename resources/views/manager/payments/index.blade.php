@@ -8,7 +8,9 @@
     <div class="mt-4 bg-white">
         <div class="bg-green-500  p-2 flex justify-between">
             <h2 class="text-white">Payments</h2>
-            {{-- <a class="p-2 bg-white rounded-md text-xs" href="{{ route('user.invoices.create') }}">Add Invoie</a> --}}
+            <div>
+                {{ $payableBalance }}
+            </div>
         </div>
         <div class="px-4 pb-2">
             <div class="overflow-x-auto mt-2">

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use App\Models\User;
+
 class PaymentContorller extends Controller
 {
     /**
@@ -13,7 +15,14 @@ class PaymentContorller extends Controller
     public function index()
     {
         $collection = Invoice::with(['user'])->orderBy('id','desc')->paginate();
-        return view('manager.payments.index', compact('collection'));
+        $payableBalance = User::role('merchant')
+            ->whereHas('transaction')
+            ->get()
+            ->sum(function($user) {
+                return $user->transaction->balance;
+            });
+        
+        return view('manager.payments.index', compact('collection', 'payableBalance'));
     }
 
     /**
